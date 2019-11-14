@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ContentModelStore">
+    <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p=".gitignore" t="Include" />
+      <e p="appsettings.Development.json" t="Include" />
+      <e p="appsettings.json" t="Include" />
+      <e p="bin" t="ExcludeRecursive" />
+      <e p="Controllers" t="Include">
+        <e p="HomeController.cs" t="Include" />
+      </e>
+      <e p="Invento.csproj" t="IncludeRecursive" />
+      <e p="Invento.sln" t="IncludeFlat" />
+      <e p="Models" t="Include">
+        <e p="ErrorViewModel.cs" t="Include" />
+      </e>
+      <e p="obj" t="ExcludeRecursive">
+        <e p="Debug" t="Include">
+          <e p="netcoreapp2.2" t="Include">
+            <e p="Invento.AssemblyInfo.cs" t="Include" />
+          </e>
+        </e>
+      </e>
+      <e p="packages" t="ExcludeRecursive" />
+      <e p="Program.cs" t="Include" />
+      <e p="Properties" t="Include">
+        <e p="launchSettings.json" t="Include" />
+      </e>
+      <e p="Startup.cs" t="Include" />
+      <e p="Views" t="Include">
+        <e p="_ViewImports.cshtml" t="Include" />
+        <e p="_ViewStart.cshtml" t="Include" />
+        <e p="Home" t="Include">
+          <e p="Index.cshtml" t="Include" />
+          <e p="Privacy.cshtml" t="Include" />
+        </e>
+        <e p="Shared" t="Include">
+          <e p="_CookieConsentPartial.cshtml" t="Include" />
+          <e p="_CSSPartial.cshtml" t="Include" />
+          <e p="_JSPartial.cshtml" t="Include" />
+          <e p="_Layout.cshtml" t="Include" />
+          <e p="_ValidationScriptsPartial.cshtml" t="Include" />
+          <e p="Error.cshtml" t="Include" />
+        </e>
+      </e>
+      <e p="wwwroot" t="Include">
+        <e p="assets" t="Include">
+          <e p="icon" t="Include">
+            <e p="add.png" t="Include" />
+            <e p="arrow_back.png" t="Include" />
+            <e p="arrow_down.png" t="Include" />
+            <e p="arrow_left.png" t="Include" />
+            <e p="arrow_right.png" t="Include" />
+            <e p="arrow_up.png" t="Include" />
+            <e p="assigned.png" t="Include" />
+            <e p="auto.png" t="Include" />
+            <e p="avantie.gif" t="Include" />
+            <e p="building.png" t="Include" />
+            <e p="calendar.png" t="Include" />
+            <e p="campus.png" t="Include" />
+            <e p="database.png" t="Include" />
+            <e p="date.png" t="Include" />
+            <e p="disconnected.png" t="Include" />
+            <e p="edit.png" t="Include" />
+            <e p="examination_course.png" t="Include" />
+            <e p="examination_seat.png" t="Include" />
+            <e p="examination_section.png" t="Include" />
+            <e p="home.png" t="Include" />
+            <e p="info.png" t="Include" />
+            <e p="manual.png" t="Include" />
+            <e p="profile.png" t="Include" />
+            <e p="remove.png" t="Include" />
+            <e p="remove_red.png" t="Include" />
+            <e p="report.png" t="Include" />
+            <e p="reset.png" t="Include" />
+            <e p="room.png" t="Include" />
+            <e p="room_management.png" t="Include" />
+            <e p="schedule.png" t="Include" />
+            <e p="search.png" t="Include" />
+            <e p="session.png" t="Include" />
+            <e p="share.png" t="Include" />
+            <e p="sort.png" t="Include" />
+            <e p="study_course.png" t="Include" />
+            <e p="study_seat.png" t="Include" />
+            <e p="study_section.png" t="Include" />
+            <e p="system.png" t="Include" />
+            <e p="time.png" t="Include" />
+            <e p="timeslot.png" t="Include" />
+            <e p="trash.png" t="Include" />
+            <e p="unassigned.png" t="Include" />
+            <e p="user.png" t="Include" />
+            <e p="visualization.png" t="Include" />
+          </e>
+          <e p="logo" t="Include">
+            <e p="abac.png" t="Include" />
+          </e>
+          <e p="photo" t="Include">
+            <e p="background.jpg" t="Include" />
+          </e>
+        </e>
+        <e p="css" t="Include">
+          <e p="main.css" t="Include" />
+          <e p="main.css.map" t="Include" />
+          <e p="site.css" t="Include" />
+        </e>
+        <e p="favicon.ico" t="Include" />
+        <e p="fonts" t="Include">
+          <e p="FiraSans" t="Include">
+            <e p="FiraSans-Bold.ttf" t="Include" />
+            <e p="FiraSans-Medium.ttf" t="Include" />
+            <e p="FiraSans-Regular.ttf" t="Include" />
+            <e p="FiraSans-SemiBold.ttf" t="Include" />
+          </e>
+          <e p="Segoe" t="Include">
+            <e p="segoeui.ttf" t="Include" />
+            <e p="segoeuib.ttf" t="Include" />
+            <e p="SEGOEUII.TTF" t="Include" />
+            <e p="SEGOEUIZ.TTF" t="Include" />
+          </e>
+        </e>
+        <e p="js" t="Include">
+          <e p="firebase.js" t="Include" />
+          <e p="main.js" t="Include" />
+          <e p="site.js" t="Include" />
+        </e>
+        <e p="lib" t="Include">
+          <e p="bootbox" t="Include">
+            <e p="bootbox.all.js" t="Include" />
+            <e p="bootbox.all.min.js" t="Include" />
+            <e p="bootbox.js" t="Include" />
+            <e p="bootbox.locales.js" t="Include" />
+            <e p="bootbox.locales.min.js" t="Include" />
+            <e p="bootbox.min.js" t="Include" />
+          </e>
+          <e p="bootstrap" t="Include">
+            <e p="css" t="Include">
+              <e p="bootstrap-grid.css" t="Include" />
+              <e p="bootstrap-grid.css.map" t="Include" />
+              <e p="bootstrap-grid.min.css" t="Include" />
+              <e p="bootstrap-grid.min.css.map" t="Include" />
+              <e p="bootstrap-reboot.css" t="Include" />
+              <e p="bootstrap-reboot.css.map" t="Include" />
+              <e p="bootstrap-reboot.min.css" t="Include" />
+              <e p="bootstrap-reboot.min.css.map" t="Include" />
+              <e p="bootstrap.css" t="Include" />
+              <e p="bootstrap.css.map" t="Include" />
+              <e p="bootstrap.min.css" t="Include" />
+              <e p="bootstrap.min.css.map" t="Include" />
+            </e>
+            <e p="js" t="Include">
+              <e p="bootstrap.bundle.js" t="Include" />
+              <e p="bootstrap.bundle.js.map" t="Include" />
+              <e p="bootstrap.bundle.min.js" t="Include" />
+              <e p="bootstrap.bundle.min.js.map" t="Include" />
+              <e p="bootstrap.js" t="Include" />
+              <e p="bootstrap.js.map" t="Include" />
+              <e p="bootstrap.min.js" t="Include" />
+              <e p="bootstrap.min.js.map" t="Include" />
+            </e>
+          </e>
+          <e p="datatable" t="Include">
+            <e p="css" t="Include">
+              <e p="dataTables.bootstrap4.min.css" t="Include" />
+              <e p="dataTables.min.css" t="Include" />
+              <e p="responsive.bootstrap4.min.css" t="Include" />
+            </e>
+            <e p="js" t="Include">
+              <e p="dataTables.bootstrap4.min.js" t="Include" />
+              <e p="dataTables.min.js" t="Include" />
+              <e p="responsive.bootstrap4.min.js" t="Include" />
+            </e>
+          </e>
+          <e p="datatables.rar" t="Include" />
+          <e p="jquery" t="Include">
+            <e p="dist" t="Include">
+              <e p="external" t="Include">
+                <e p="jquery" t="Include">
+                  <e p="jquery.js" t="Include" />
+                </e>
+              </e>
+              <e p="images" t="Include">
+                <e p="ui-icons_444444_256x240.png" t="Include" />
+                <e p="ui-icons_555555_256x240.png" t="Include" />
+                <e p="ui-icons_777620_256x240.png" t="Include" />
+                <e p="ui-icons_777777_256x240.png" t="Include" />
+                <e p="ui-icons_cc0000_256x240.png" t="Include" />
+                <e p="ui-icons_ffffff_256x240.png" t="Include" />
+              </e>
+              <e p="jquery-ui.css" t="Include" />
+              <e p="jquery-ui.js" t="Include" />
+              <e p="jquery-ui.min.css" t="Include" />
+              <e p="jquery-ui.min.js" t="Include" />
+              <e p="jquery-ui.structure.css" t="Include" />
+              <e p="jquery-ui.structure.min.css" t="Include" />
+              <e p="jquery-ui.theme.css" t="Include" />
+              <e p="jquery-ui.theme.min.css" t="Include" />
+              <e p="jquery.js" t="Include" />
+              <e p="jquery.min.js" t="Include" />
+              <e p="jquery.min.map" t="Include" />
+            </e>
+            <e p="LICENSE.txt" t="Include" />
+          </e>
+          <e p="jquery-validation" t="Include">
+            <e p="dist" t="Include">
+              <e p="additional-methods.js" t="Include" />
+              <e p="additional-methods.min.js" t="Include" />
+              <e p="jquery.validate.js" t="Include" />
+              <e p="jquery.validate.min.js" t="Include" />
+            </e>
+            <e p="LICENSE.md" t="Include" />
+          </e>
+          <e p="jquery-validation-unobtrusive" t="Include">
+            <e p="jquery.validate.unobtrusive.js" t="Include" />
+            <e p="jquery.validate.unobtrusive.min.js" t="Include" />
+            <e p="LICENSE.txt" t="Include" />
+          </e>
+          <e p="typeahead" t="Include">
+            <e p="bloodhound.js" t="Include" />
+            <e p="bloodhound.min.js" t="Include" />
+            <e p="typeahead.bundle.js" t="Include" />
+            <e p="typeahead.bundle.min.js" t="Include" />
+            <e p="typeahead.jquery.js" t="Include" />
+            <e p="typeahead.jquery.min.js" t="Include" />
+          </e>
+        </e>
+      </e>
+    </e>
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
+    <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_Invento.2016690684.00" t="ExcludeRecursive" />
+  </component>
+</project>
