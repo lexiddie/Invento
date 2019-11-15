@@ -5,11 +5,23 @@ using Microsoft.AspNetCore.Mvc;
 using Invento.Models;
 using Firebase.Database;    
 using Firebase.Database.Query;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Invento.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly MemoryCacheEntryOptions _options = new MemoryCacheEntryOptions();
+        private readonly MemoryCacheEntryOptions _entryOptions = new MemoryCacheEntryOptions();
+        private readonly IMemoryCache _cache;
+        
+        public HomeController(IMemoryCache cache)
+        {
+            _options.AbsoluteExpiration = DateTime.Now.AddMinutes(30);
+            _options.SlidingExpiration = TimeSpan.FromMinutes(30);
+            _entryOptions.SetPriority(CacheItemPriority.NeverRemove);
+            _cache = cache;
+        }
         public IActionResult Index()
         {
             Firebase();

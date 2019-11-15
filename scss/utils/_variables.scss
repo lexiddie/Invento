@@ -27,6 +27,8 @@ $white: #ffffff;
 $white_25: rgba(255, 255, 255, 0.25);
 $white_40: rgba(255, 255, 255, 0.4);
 $white_50: rgba(255, 255, 255, 0.5);
+$white_80: rgba(255, 255, 255, 0.8);
+$white_90: rgba(255, 255, 255, 0.9);
 $white-light: #f9f9f9;
 $white-blight: #d2d2d2;
 $white-smoke: #e7eaec;
@@ -46,7 +48,23 @@ $gray-dark: #999;
 
 $excel: #1f7244;
 
+@font-face {
+  font-family: 'BlairTC TT';
+  src: url('../fonts/Blair/Blaiib.ttf');
+}
+
+@font-face {
+  font-family: 'Segoe UI';
+  src: url('../fonts/Segoe/segoeui.ttf');
+}
+
+@font-face {
+  font-family: 'Fira Sans';
+  src: url('../fonts/FiraSans/FiraSans-Regular.ttf');
+}
+
 // FONT
 $default-font-size: 1rem;
 $primary-font-family: 'Segoe UI';
 $secondary-font-family: 'Fira Sans';
+$blairTC-family: 'BlairTC TT';
