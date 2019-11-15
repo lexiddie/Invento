@@ -1,0 +1,35 @@
+<nav class="main-sidebar">
+    <ul class="nav-list">
+        <li class="nav-menu">@Html.ActionLink("Dashboard", "Index", "Dashboard", null, new {})</li>
+
+        <li class="nav-item">
+            <div>
+                <button onclick="handleToggle(0)">
+                    <span>Stock Management</span>
+                    <img src="~/assets/icon/arrow_down.png" alt="Arrow Down Logo"/>
+                </button>
+                <ul id="stock-management" class="nav-collapse">
+                    <li>@Html.ActionLink("Supplier", "Index", "Supplier", null, new {@class = "main-link"})</li>
+                    <li>@Html.ActionLink("Category", "Index", "Category", null, new {@class = "main-link"})</li>
+                    <li>@Html.ActionLink("Product", "Index", "Product", null, new {@class = "main-link"})</li>
+                </ul>
+            </div>
+        </li>
+    
+        <li class="nav-item">
+            <div>
+                <button onclick="handleToggle(1)">
+                    <span>Inventory Management</span>
+                    <img src="~/assets/icon/arrow_down.png" alt="Arrow Down Logo"/>
+                </button>
+                <ul id="inventory-management" class="nav-collapse">
+                    <li>@Html.ActionLink("Supplier", "Index", "Supplier", null, new {@class = "main-link"})</li>
+                    <li>@Html.ActionLink("Category", "Index", "Category", null, new {@class = "main-link"})</li>
+                    <li>@Html.ActionLink("Product", "Index", "Product", null, new {@class = "main-link"})</li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</nav>
+
+
