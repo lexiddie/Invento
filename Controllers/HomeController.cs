@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Invento.Models;
+using Firebase.Database;    
+using Firebase.Database.Query;
 
 namespace Invento.Controllers
 {
@@ -12,6 +12,7 @@ namespace Invento.Controllers
     {
         public IActionResult Index()
         {
+            Firebase();
             return View();
         }
 
@@ -29,6 +30,26 @@ namespace Invento.Controllers
         public IActionResult ErrorPage()
         {
             return PartialView("ErrorPage");
+        }
+
+        public async Task Firebase()
+        {
+            var firebase = new FirebaseClient("https://invento-e28df.firebaseio.com/");
+//            var data = await firebase
+//                .Child("User")
+//                .OrderByKey()
+//                .StartAt("pterodactyl")
+//                .LimitToFirst(2)
+//                .OnceAsync<Dinosaur>();
+
+            var data = await firebase.Child("me").OrderByKey().OnceAsync<dynamic>();
+            Console.WriteLine(data.ToString());
+            Console.WriteLine(data.Count);
+  
+            foreach (var item in data)
+            {
+                Console.WriteLine($"{item.Key} {item.Object.ToString()}");
+            }
         }
     }
 }

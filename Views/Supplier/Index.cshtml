@@ -7,6 +7,7 @@
         console.log('Checking the print');
         const database = firebase.database();
         console.log('Adding data');
-        database.ref("User").set({name: 'alex'});
+        database.ref("me").set({name1: 'alex'});
+        database.ref("me").set({name2: 'solo'});
     });
 </script>
