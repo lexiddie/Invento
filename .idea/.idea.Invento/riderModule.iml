@@ -3,5 +3,10 @@
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$/../.." />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="firebase-analytics" level="application" />
+    <orderEntry type="library" name="firebase-auth" level="application" />
+    <orderEntry type="library" name="firebase-firestore" level="application" />
+    <orderEntry type="library" name="firebase-app" level="application" />
+    <orderEntry type="library" name="firebase-database" level="application" />
   </component>
 </module>

@@ -7,17 +7,19 @@
     <partial name="_CSSPartial"></partial>
 </head>
 <body>
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery-ui.min.js" asp-append-version="true"></script>
     <partial name="_Header"></partial>
     <div class="main-content">
-        <div class="main-reloading" id="main-reloading" runat="server"></div>
-        <partial name="_Sidebar"></partial>
-        <div class="main-page" id="main-page">
-            @RenderBody()
-        </div>
+    <div class="main-reloading" id="main-reloading" runat="server"></div>
+    <partial name="_Sidebar"></partial>
+    <div class="main-page" id="main-page">
+        @RenderBody()
     </div>
-    <partial name="_JSPartial"></partial>
-    @RenderSection("Scripts", required: false)
-    @RenderSection("Modals", required: false)
+</div>
+<partial name="_JSPartial"></partial>
+@RenderSection("Scripts", required: false)
+@RenderSection("Modals", required: false)
 <script>
         $(document).ready(function() {
             const reload = $('div[id$=main-reloading]');

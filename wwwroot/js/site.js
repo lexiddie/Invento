@@ -7,7 +7,7 @@ const test = "sdfsdf";
 function myAccFunc() {
   console.log("testing");
   const x = document.getElementById("demoAcc");
-  if (x.className.indexOf("dropdown") == -1) {
+  if (x.className.indexOf("dropdown") === -1) {
     x.className += " dropdown";
     x.previousElementSibling.className += " w3-green";
   } else {

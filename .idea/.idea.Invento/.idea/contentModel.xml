@@ -2,17 +2,31 @@
 <project version="4">
   <component name="ContentModelStore">
     <e p="$PROJECT_DIR$" t="IncludeRecursive">
+      <e p=".firebaserc" t="Include" />
       <e p=".gitignore" t="Include" />
       <e p="appsettings.Development.json" t="Include" />
       <e p="appsettings.json" t="Include" />
       <e p="bin" t="ExcludeRecursive" />
       <e p="Controllers" t="Include">
+        <e p="CategoryController.cs" t="Include" />
+        <e p="DashboardController.cs" t="Include" />
         <e p="HomeController.cs" t="Include" />
+        <e p="MeasurementController.cs" t="Include" />
+        <e p="ProductController.cs" t="Include" />
+        <e p="PurchaseController.cs" t="Include" />
+        <e p="SupplierController.cs" t="Include" />
+        <e p="UserController.cs" t="Include" />
       </e>
+      <e p="database.rules.json" t="Include" />
+      <e p="firebase.json" t="Include" />
       <e p="Invento.csproj" t="IncludeRecursive" />
       <e p="Invento.sln" t="IncludeFlat" />
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
+      </e>
+      <e p="n" t="Include">
+        <e p="404.html" t="Include" />
+        <e p="index.html" t="Include" />
       </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
@@ -26,21 +40,105 @@
       <e p="Properties" t="Include">
         <e p="launchSettings.json" t="Include" />
       </e>
+      <e p="scss" t="Include">
+        <e p="base" t="Include">
+          <e p="_reset.scss" t="Include" />
+          <e p="_typeahead.scss" t="Include" />
+          <e p="_typography.scss" t="Include" />
+        </e>
+        <e p="components" t="Include">
+          <e p="_animations.scss" t="Include" />
+          <e p="_blocks.scss" t="Include" />
+          <e p="_buttons.scss" t="Include" />
+          <e p="_calendar.scss" t="Include" />
+          <e p="_dataTables.scss" t="Include" />
+          <e p="_dropdowns.scss" t="Include" />
+          <e p="_forms.scss" t="Include" />
+          <e p="_labels.scss" t="Include" />
+          <e p="_lists.scss" t="Include" />
+          <e p="_schedule.scss" t="Include" />
+          <e p="_selects.scss" t="Include" />
+          <e p="_tables.scss" t="Include" />
+          <e p="_tabs.scss" t="Include" />
+          <e p="_textfields.scss" t="Include" />
+        </e>
+        <e p="core" t="Include">
+          <e p="_style.scss" t="Include" />
+        </e>
+        <e p="layout" t="Include">
+          <e p="_content.scss" t="Include" />
+          <e p="_footer.scss" t="Include" />
+          <e p="_heading.scss" t="Include" />
+          <e p="_sidebar.scss" t="Include" />
+        </e>
+        <e p="main.css" t="Include" />
+        <e p="main.css.map" t="Include" />
+        <e p="main.scss" t="Include" />
+        <e p="pages" t="Include">
+          <e p="_class-lookup.scss" t="Include" />
+          <e p="_class-schedule.scss" t="Include" />
+          <e p="_curriculum.scss" t="Include" />
+          <e p="_login.scss" t="Include" />
+          <e p="_student-profile.scss" t="Include" />
+          <e p="_study-plan.scss" t="Include" />
+        </e>
+        <e p="themes" t="Include">
+          <e p="_ks-light.scss" t="Include" />
+          <e p="_ks-main.scss" t="Include" />
+        </e>
+        <e p="utils" t="Include">
+          <e p="_alignments.scss" t="Include" />
+          <e p="_colors.scss" t="Include" />
+          <e p="_displays.scss" t="Include" />
+          <e p="_functions.scss" t="Include" />
+          <e p="_margins.scss" t="Include" />
+          <e p="_mixins.scss" t="Include" />
+          <e p="_paddings.scss" t="Include" />
+          <e p="_sizes.scss" t="Include" />
+          <e p="_typo-sizes.scss" t="Include" />
+          <e p="_variables.scss" t="Include" />
+        </e>
+      </e>
       <e p="Startup.cs" t="Include" />
+      <e p="storage.rules" t="Include" />
       <e p="Views" t="Include">
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="_ViewStart.cshtml" t="Include" />
+        <e p="Category" t="Include">
+          <e p="Index.cshtml" t="Include" />
+        </e>
+        <e p="Dashboard" t="Include">
+          <e p="Index.cshtml" t="Include" />
+        </e>
         <e p="Home" t="Include">
+          <e p="ErrorPage.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
           <e p="Privacy.cshtml" t="Include" />
+        </e>
+        <e p="Measurement" t="Include">
+          <e p="Index.cshtml" t="Include" />
+        </e>
+        <e p="Product" t="Include">
+          <e p="Index.cshtml" t="Include" />
+        </e>
+        <e p="Purchase" t="Include">
+          <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Shared" t="Include">
           <e p="_CookieConsentPartial.cshtml" t="Include" />
           <e p="_CSSPartial.cshtml" t="Include" />
+          <e p="_Header.cshtml" t="Include" />
           <e p="_JSPartial.cshtml" t="Include" />
           <e p="_Layout.cshtml" t="Include" />
+          <e p="_Sidebar.cshtml" t="Include" />
           <e p="_ValidationScriptsPartial.cshtml" t="Include" />
           <e p="Error.cshtml" t="Include" />
+        </e>
+        <e p="Supplier" t="Include">
+          <e p="Index.cshtml" t="Include" />
+        </e>
+        <e p="User" t="Include">
+          <e p="Index.cshtml" t="Include" />
         </e>
       </e>
       <e p="wwwroot" t="Include">
@@ -227,5 +325,10 @@
     </e>
     <e p="$USER_HOME$/Library/Caches/Rider2019.2/extResources" t="IncludeRecursive" />
     <e p="$USER_HOME$/Library/Caches/Rider2019.2/resharper-host/local/Transient/ReSharperHost/v192/SolutionCaches/_Invento.2016690684.00" t="ExcludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_www.gstatic.com_firebasejs_7.4.0_firebase-analytics.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_www.gstatic.com_firebasejs_7.4.0_firebase-app.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_www.gstatic.com_firebasejs_7.4.0_firebase-auth.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_www.gstatic.com_firebasejs_7.4.0_firebase-database.js" t="IncludeRecursive" />
+    <e p="$APPLICATION_CONFIG_DIR$/javascript/extLibs/http_www.gstatic.com_firebasejs_7.4.0_firebase-firestore.js" t="IncludeRecursive" />
   </component>
 </project>
