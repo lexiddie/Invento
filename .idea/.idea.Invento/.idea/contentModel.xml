@@ -11,6 +11,7 @@
         <e p="CategoryController.cs" t="Include" />
         <e p="DashboardController.cs" t="Include" />
         <e p="HomeController.cs" t="Include" />
+        <e p="LoginController.cs" t="Include" />
         <e p="MeasurementController.cs" t="Include" />
         <e p="ProductController.cs" t="Include" />
         <e p="PurchaseController.cs" t="Include" />
@@ -19,6 +20,7 @@
       </e>
       <e p="database.rules.json" t="Include" />
       <e p="firebase.json" t="Include" />
+      <e p="Helpers" t="Include" />
       <e p="Invento.csproj" t="IncludeRecursive" />
       <e p="Invento.sln" t="IncludeFlat" />
       <e p="Models" t="Include">
@@ -40,6 +42,7 @@
       <e p="Properties" t="Include">
         <e p="launchSettings.json" t="Include" />
       </e>
+      <e p="Providers" t="Include" />
       <e p="scss" t="Include">
         <e p="base" t="Include">
           <e p="_reset.scss" t="Include" />
@@ -101,6 +104,7 @@
       </e>
       <e p="Startup.cs" t="Include" />
       <e p="storage.rules" t="Include" />
+      <e p="ViewModels" t="Include" />
       <e p="Views" t="Include">
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="_ViewStart.cshtml" t="Include" />
@@ -114,6 +118,9 @@
           <e p="ErrorPage.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
           <e p="Privacy.cshtml" t="Include" />
+        </e>
+        <e p="Login" t="Include">
+          <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Measurement" t="Include">
           <e p="Index.cshtml" t="Include" />
@@ -203,6 +210,9 @@
         </e>
         <e p="favicon.ico" t="Include" />
         <e p="fonts" t="Include">
+          <e p="Blair" t="Include">
+            <e p="Blaiib.ttf" t="Include" />
+          </e>
           <e p="FiraSans" t="Include">
             <e p="FiraSans-Bold.ttf" t="Include" />
             <e p="FiraSans-Medium.ttf" t="Include" />
