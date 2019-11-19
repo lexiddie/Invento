@@ -9,6 +9,13 @@
   width: 100%;
 }
 
+.main-login {
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
 .main-sidebar {
   height: 100%;
   width: 250px;
@@ -95,7 +102,8 @@
 
       > label:nth-child(2) {
         width: inherit;
-        margin-top: 50px;
+        margin-top: 30px;
+        margin-bottom: 30px;
         font-family: $primary-font-family !important;
         font-size: 1.2rem;
         font-weight: 500;
@@ -103,13 +111,13 @@
       }
 
       > label {
-        margin-top: 30px;
+        margin-top: 20px;
         font-family: $primary-font-family !important;
         height: 35px;
         width: 300px;
         text-align: left;
         line-height: 150%;
-        font-size: 1.2rem;
+        font-size: 1.1rem;
         font-weight: 600;
       }
 
@@ -118,6 +126,21 @@
         background-color: $primary;
         height: 35px;
         width: 300px;
+      }
+
+      > button {
+        margin-top: 50px;
+        color: white;
+        background-color: $primary;
+        height: 35px;
+        width: 300px;
+
+        > span {
+          font-family: $primary-font-family !important;
+          line-height: 150%;
+          font-size: 1.1rem;
+          font-weight: 600;
+        }
       }
     }
   }

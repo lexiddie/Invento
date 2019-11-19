@@ -5,5 +5,56 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <script>
+        $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const header = $('.main-header');
+            const content = $('.main-content');
+            let isLogin = false;
+            let urlDirectory;
+            $.when(
+                $.getJSON('@Url.Action("CheckLogin", "Home")', function(res) {
+                    console.log(res);
+                    isLogin = res['isLogin'];
+                    console.log(`Check Login first ${isLogin}`);
+                }),
+                console.log(`Check login second ${isLogin}`),
+                isLogin ? urlDirectory = '@Url.Action("Index", "Dashboard")' : urlDirectory = '@Url.Action("Index", "Login")',
+                console.log(`Action link ${urlDirectory}`)
+            ).then(function() {
+                $.get(urlDirectory).done(function(result) {
+                    if (isLogin) { 
+                        console.log('Dashboard view');
+                        header.show();
+                        content.show();
+                        $('#main-page').html(result);
+                    } else {
+                        console.log('Login view');
+                        header.hide();
+                        content.hide();
+                        $('#main-login').html(result);
+                    }
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                    handleErrorPage();
+                });
+            });
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
+            }
+        });                                                                                       
+    </script>
 </div>
+
+
+
 

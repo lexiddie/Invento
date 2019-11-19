@@ -9,23 +9,23 @@
 <body>
     <script type="text/javascript" src="~/lib/jquery/dist/jquery.min.js" asp-append-version="true"></script>
     <script type="text/javascript" src="~/lib/jquery/dist/jquery-ui.min.js" asp-append-version="true"></script>
+    <div class="main-reloading" id="main-reloading" runat="server"></div>
+    <div class="main-login" id="main-login"></div>
     <partial name="_Header"></partial>
     <div class="main-content">
-    <div class="main-reloading" id="main-reloading" runat="server"></div>
-    <partial name="_Sidebar"></partial>
-    <div class="main-page" id="main-page">
-        @RenderBody()
+        <partial name="_Sidebar"></partial>    
+        <div class="main-page" id="main-page">
+            @RenderBody()
+        </div>
     </div>
-</div>
-<partial name="_JSPartial"></partial>
-@RenderSection("Scripts", required: false)
-@RenderSection("Modals", required: false)
+    <partial name="_JSPartial"></partial>
+    @RenderSection("Scripts", required: false)
+    @RenderSection("Modals", required: false)
 <script>
         $(document).ready(function() {
             const reload = $('div[id$=main-reloading]');
-            
             reload.hide();
-            $('.main-link').on("click", function(event) {
+            $('.main-link').on('click', function(event) {
                 $('.main-link').each(function(index, object) {
                    if (object.className.indexOf('main-link-active') !== -1) {
                        object.className = object.className.replace(' main-link-active', '');

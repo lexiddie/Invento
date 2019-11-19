@@ -42,7 +42,26 @@ namespace Invento.Controllers
         public IActionResult ErrorPage()
         {
             return PartialView("ErrorPage");
+        }    
+        
+        public IActionResult CheckLogin()
+        {
+            if (!_cache.Get<bool>("isLogin"))
+            {
+                _cache.Set("isLogin", false, _entryOptions);
+            }
+            var current = new { isLogin = _cache.Get<bool>("isLogin") } as dynamic;
+            return Json(current);
         }
+
+        public IActionResult VerifyLogin(string username, string password)
+        {
+            if (username != "lexiddie" || password != "123") return Json(new {isSuccess = false} as dynamic);
+            _cache.Set("isLogin", true, _entryOptions);
+            _cache.Set("loginUsername", "lexiddie", _entryOptions);
+            return Json(new {isSuccess = true, username = "lexiddie"} as dynamic);
+        }
+
 
         public async Task Firebase()
         {

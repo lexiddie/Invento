@@ -2528,6 +2528,15 @@ p {
   width: 100%;
 }
 
+.main-login {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
+
 .main-sidebar {
   height: 100%;
   width: 250px;
@@ -2624,7 +2633,8 @@ p {
 
 .page-login > div > div > label:nth-child(2) {
   width: inherit;
-  margin-top: 50px;
+  margin-top: 30px;
+  margin-bottom: 30px;
   font-family: "Segoe UI" !important;
   font-size: 1.2rem;
   font-weight: 500;
@@ -2632,13 +2642,13 @@ p {
 }
 
 .page-login > div > div > label {
-  margin-top: 30px;
+  margin-top: 20px;
   font-family: "Segoe UI" !important;
   height: 35px;
   width: 300px;
   text-align: left;
   line-height: 150%;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: 600;
 }
 
@@ -2647,6 +2657,21 @@ p {
   background-color: #2c304d;
   height: 35px;
   width: 300px;
+}
+
+.page-login > div > div > button {
+  margin-top: 50px;
+  color: white;
+  background-color: #2c304d;
+  height: 35px;
+  width: 300px;
+}
+
+.page-login > div > div > button > span {
+  font-family: "Segoe UI" !important;
+  line-height: 150%;
+  font-size: 1.1rem;
+  font-weight: 600;
 }
 
 .page-selection {
@@ -4639,7 +4664,7 @@ input {
       align-self: center;
   vertical-align: middle;
   line-height: 1.3;
-  border-radius: 50px;
+  border-radius: 5px;
   -webkit-box-shadow: 0 1px 5px 1px rgba(52, 40, 104, 0.075);
           box-shadow: 0 1px 5px 1px rgba(52, 40, 104, 0.075);
 }
