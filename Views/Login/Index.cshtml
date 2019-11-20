@@ -78,17 +78,17 @@
                 }
             });
             
-                function handleErrorPage() {
-                    const url = '@Url.Action("ErrorPage", "Home")';
-                    $.ajax({
-                        type: 'GET',
-                        url: url,
-                        cache: true
-                    }).done(function(res) {
-                        $('#main-page').empty().append(res);
-                        reload.hide();
-                    })
-                }
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
+            }
         });
     </script>
 </div>

@@ -2,34 +2,33 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div>
     <script>
         $(document).ready(function() {
             const reload = $('div[id$=main-reloading]');
             const header = $('.main-header');
             const content = $('.main-content');
-            let isLogin = false;
+            const login = $('.main-login');
+            let isLogin;
             let urlDirectory;
-            $.when(
-                $.getJSON('@Url.Action("CheckLogin", "Home")', function(res) {
-                    console.log(res);
-                    isLogin = res['isLogin'];
-                    console.log(`Check Login first ${isLogin}`);
-                }),
-                console.log(`Check login second ${isLogin}`),
-                isLogin ? urlDirectory = '@Url.Action("Index", "Dashboard")' : urlDirectory = '@Url.Action("Index", "Login")',
-                console.log(`Action link ${urlDirectory}`)
-            ).then(function() {
+            $.getJSON('@Url.Action("CheckLogin", "Home")', function(res) {
+                console.log(res);
+                isLogin = res['isLogin'];
+                console.log(`Check Login first ${isLogin}`);
+                console.log(`Check login second ${isLogin}`);
+                isLogin ? urlDirectory = '@Url.Action("Index", "Dashboard")' : urlDirectory = '@Url.Action("Index", "Login")';
+                console.log(`Action link ${urlDirectory}`);
+                
                 $.get(urlDirectory).done(function(result) {
                     if (isLogin) { 
                         console.log('Dashboard view');
+                        login.hide();
                         header.show();
                         content.show();
                         $('#main-page').html(result);
                     } else {
                         console.log('Login view');
+                        login.show();
                         header.hide();
                         content.hide();
                         $('#main-login').html(result);
@@ -40,6 +39,7 @@
                     handleErrorPage();
                 });
             });
+
             function handleErrorPage() {
                 const url = '@Url.Action("ErrorPage", "Home")';
                 $.ajax({

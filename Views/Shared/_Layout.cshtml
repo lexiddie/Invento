@@ -12,7 +12,7 @@
     <div class="main-reloading" id="main-reloading" runat="server"></div>
     <div class="main-login" id="main-login"></div>
     <partial name="_Header"></partial>
-    <div class="main-content">
+    <div class="main-content" style="display: none;">
         <partial name="_Sidebar"></partial>    
         <div class="main-page" id="main-page">
             @RenderBody()
@@ -24,6 +24,10 @@
 <script>
         $(document).ready(function() {
             const reload = $('div[id$=main-reloading]');
+            const header = $('.main-header');
+            const content = $('.main-content');
+            const login = $('.main-login');
+            const handleLogout = $('#handle-logout');
             reload.hide();
             $('.main-link').on('click', function(event) {
                 $('.main-link').each(function(index, object) {
@@ -43,7 +47,7 @@
                        console.log(c);
                        handleErrorPage();
                 });
-           });
+            });
            
             const handleNavMenu = $('.nav-menu');
             handleNavMenu.find('a').on('click', function(event) {    
@@ -63,20 +67,48 @@
                     console.log(c);
                     handleErrorPage();
                 });
+            }); 
+            
+            handleLogout.click(function() {
+                bootbox.confirm('Are you sure you want to logout?', function(res){
+                    if (res) {
+                        console.log('Working');
+                        $.getJSON('@Url.Action("Logout", "Home")', function(res) {
+                            console.log(res['isSuccess']);
+                            $.get('@Url.Action("Index", "Login")').done(function(result) {
+                                console.log('Login view');
+                                login.show();
+                                header.hide();
+                                content.hide();
+                                $('#main-login').html(result);
+                            }).fail(function(a, b, c) {
+                                console.log('It is error');
+                                console.log(c);
+                                handleErrorPage();
+                            });
+                        });
+                    }
+                }).find('.modal-content').css({
+                   'margin-top': function (){
+                       const w = $( window ).height();
+                       const b = $(".modal-dialog").height();
+                       const h = (w - b) / 2;
+                       return h + "px";
+                   }
+                });
             });
            
-           
-           function handleErrorPage() {
-               const url = '@Url.Action("ErrorPage", "Home")';
-               $.ajax({
-                   type: 'GET',
-                   url: url,
-                   cache: true
-               }).done(function(res) {
-                   $('#main-page').empty().append(res);
-                   reload.hide();
-               })
-           }
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
+            }
         });
     </script>
 </body>
