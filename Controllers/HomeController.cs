@@ -5,12 +5,17 @@ using Microsoft.AspNetCore.Mvc;
 using Invento.Models;
 using Firebase.Database;
 using Firebase.Database.Query;
+using Invento.Providers.API;
+using Invento.Providers.List;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Invento.Controllers
 {
     public class HomeController : Controller
     {
+        private static readonly ApiProvider ApiProvider = new ApiProvider();
+        private static readonly ListProvider ListProvider = new ListProvider();
+
         private readonly MemoryCacheEntryOptions _options = new MemoryCacheEntryOptions();
         private readonly MemoryCacheEntryOptions _entryOptions = new MemoryCacheEntryOptions();
         private readonly IMemoryCache _cache;
@@ -24,7 +29,9 @@ namespace Invento.Controllers
         }
         public IActionResult Index()
         {
-            Firebase();
+//            Console.WriteLine(ApiProvider.ApiCreateMeasurement());
+//            Console.WriteLine(ApiProvider.ApiMeasurements().Result.Count);
+//            Console.WriteLine("Check Return");
             return View();
         }
 

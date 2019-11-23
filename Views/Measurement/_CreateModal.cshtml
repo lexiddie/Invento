@@ -1,0 +1,52 @@
+@{
+    ViewData["Title"] = "Add Measurement";
+}
+
+<div>
+    <div class="page-info m-t-30">    
+        <div>    
+            <div>
+                <label class="m-l-15">Create Measurement<span></span></label>
+            </div>
+            <div>
+                <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
+                    <img src="@Url.Content("~/assets/icon/arrow_back.png")" class="w-18px h-18px" alt="Arrow Back Logo"/> 
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+        <div>    
+            <label></label>
+        </div>
+    </div>
+
+
+    <div class="page-form" >
+        <div>
+            <label>Examination on</label>
+            <input id="show-datetime" readonly="readonly" type="text" placeholder="No Course"/>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            $('#back-to-index').click(function() {
+                const semesterSelected = $('select[id$=semester]').val();
+                const sessionSelected = $('select[id$=session]').val();
+                $('div[id$=main-reloading]').show();
+                const url = `@Url.Action("Index", "Measurement")?semesterId=${semesterSelected}&examinationTypeId=${sessionSelected}`;
+                $.ajax({
+                    type: 'POST',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#manual-partial').empty().append(res);
+                    $('div[id$=main-reloading]').hide();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+            }); 
+        });
+    </script>
+</div>

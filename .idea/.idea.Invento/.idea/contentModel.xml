@@ -19,12 +19,20 @@
         <e p="UserController.cs" t="Include" />
       </e>
       <e p="database.rules.json" t="Include" />
+      <e p="Dtos" t="Include">
+        <e p="MeasurementDto.cs" t="Include" />
+      </e>
       <e p="firebase.json" t="Include" />
-      <e p="Helpers" t="Include" />
+      <e p="Helpers" t="Include">
+        <e p="CheckConnection.cs" t="Include" />
+        <e p="ReadDateTime.cs" t="Include" />
+        <e p="ReadJson.cs" t="Include" />
+      </e>
       <e p="Invento.csproj" t="IncludeRecursive" />
       <e p="Invento.sln" t="IncludeFlat" />
       <e p="Models" t="Include">
         <e p="ErrorViewModel.cs" t="Include" />
+        <e p="Measurement.cs" t="Include" />
       </e>
       <e p="n" t="Include">
         <e p="404.html" t="Include" />
@@ -42,7 +50,16 @@
       <e p="Properties" t="Include">
         <e p="launchSettings.json" t="Include" />
       </e>
-      <e p="Providers" t="Include" />
+      <e p="Providers" t="Include">
+        <e p="API" t="Include">
+          <e p="ApiProvider.cs" t="Include" />
+          <e p="IApiProvider.cs" t="Include" />
+        </e>
+        <e p="List" t="Include">
+          <e p="IListProvider.cs" t="Include" />
+          <e p="ListProvider.cs" t="Include" />
+        </e>
+      </e>
       <e p="scss" t="Include">
         <e p="base" t="Include">
           <e p="_reset.scss" t="Include" />
@@ -104,7 +121,9 @@
       </e>
       <e p="Startup.cs" t="Include" />
       <e p="storage.rules" t="Include" />
-      <e p="ViewModels" t="Include" />
+      <e p="ViewModels" t="Include">
+        <e p="MeasurementViewModel.cs" t="Include" />
+      </e>
       <e p="Views" t="Include">
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="_ViewStart.cshtml" t="Include" />
@@ -123,6 +142,9 @@
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Measurement" t="Include">
+          <e p="_CreateModal.cshtml" t="Include" />
+          <e p="_EditModal.cshtml" t="Include" />
+          <e p="_Measurement.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Product" t="Include">
@@ -184,6 +206,7 @@
             <e p="schedule.png" t="Include" />
             <e p="search.png" t="Include" />
             <e p="session.png" t="Include" />
+            <e p="sextant.png" t="Include" />
             <e p="share.png" t="Include" />
             <e p="sort.png" t="Include" />
             <e p="study_course.png" t="Include" />

@@ -2944,6 +2944,66 @@ p {
   font-weight: 600;
 }
 
+.page-form {
+  position: relative !important;
+  background-color: white;
+  -webkit-box-shadow: 0 0 5px #f9f9f9;
+  box-shadow: 0 1px 5px 1px rgba(52, 40, 104, 0.075);
+  height: auto;
+  width: inherit;
+  min-width: 1320px;
+  margin-left: 65px;
+  margin-right: 65px;
+  margin-bottom: 70px;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.page-form input {
+  font-family: "Segoe UI" !important;
+  color: black !important;
+  text-transform: uppercase;
+}
+
+.page-form > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: 35px;
+  width: 31%;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.page-form > div > label {
+  color: rgba(32, 37, 43, 0.5) !important;
+  height: inherit;
+  width: 140px;
+  text-align: center;
+  line-height: 150%;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.page-form > div > input {
+  margin-left: 10px;
+  margin-bottom: 10px;
+  height: 35px;
+  width: calc(100% - 150px);
+  color: #2c304d !important;
+  background-color: transparent;
+  border: 0px;
+  border-radius: 0%;
+  border-bottom: 1px solid;
+  border-color: #2c304d;
+}
+
 .page-assign {
   position: relative !important;
   background-color: white;

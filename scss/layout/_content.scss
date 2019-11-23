@@ -351,6 +351,58 @@
   }
 }
 
+.page-form {
+  position: relative !important;
+  background-color: white;
+  -webkit-box-shadow: 0 0 5px $white-light;
+  box-shadow: 0 1px 5px 1px rgba($shadow, 0.075);
+  height: auto;
+  width: inherit;
+  min-width: 1320px;
+  margin-left: 65px;
+  margin-right: 65px;
+  margin-bottom: 70px;
+  padding-left: 15px;
+  padding-right: 15px;
+
+  input {
+    font-family: $primary-font-family !important;
+    color: black !important;
+    text-transform: uppercase;
+  }
+
+  > div {
+    display: flex;
+    flex-wrap: wrap;
+    height: 35px;
+    width: 31%;
+    align-items: center;
+    justify-content: flex-start;
+
+    > label {
+      color: $black_50 !important;
+      height: inherit;
+      width: 140px;
+      text-align: center;
+      line-height: 150%;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    > input {
+      margin-left: 10px;
+      margin-bottom: 10px;
+      height: 35px;
+      width: calc(100% - 150px);
+      color: $primary !important;
+      background-color: transparent;
+      border: 0px;
+      border-radius: 0%;
+      border-bottom: 1px solid;
+      border-color: $primary;
+    }
+  }
+}
 .page-assign {
   position: relative !important;
   background-color: white;

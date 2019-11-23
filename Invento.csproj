@@ -19,8 +19,6 @@
 
     <ItemGroup>
       <Folder Include="Helpers" />
-      <Folder Include="Providers" />
-      <Folder Include="ViewModels" />
     </ItemGroup>
 
 </Project>
