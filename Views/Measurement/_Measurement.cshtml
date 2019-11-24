@@ -5,36 +5,20 @@
     var i = 0;
 }
 
-@* <div class="page-info m-t-30">     *@
-@*     <div>     *@
-@*         <div> *@
-@*             <label class="m-l-15">Welcome to Manual Assignment<span></span></label> *@
-@*         </div> *@
-@*         <div> *@
-@*             <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit"> *@
-@*                 <img src="@Url.Content("~/assets/icon/arrow_back.png")" class="w-18px h-18px" alt="Arrow Back Logo"/>  *@
-@*                 <span>Main</span> *@
-@*             </button> *@
-@*         </div> *@
-@*     </div> *@
-@*     <div>     *@
-@*         <label></label> *@
-@*     </div> *@
-@* </div> *@
-
 <div>
-    <div class="page-selection m-t-20">
+    <div class="page-selection m-t-30">
         <div>    
-            <label>@Model.UpdatedDateTime</label>
+            <img class="m-x-15" src="@Url.Content("~/assets/icon/clock.png")" alt="Clock Logo"/>
+            <label class="m-l-10 m-t-5">Updated At @Model.UpdatedDateTime</label>
         </div>    
         <div>
             <button id="create-measurement" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
                 <img src="@Url.Content("~/assets/icon/add.png")" alt="Add Logo"/> 
-                <span>Search</span>
+                <span>Create</span>
             </button>
         </div>
     </div>
-    <section class="page-table">
+    <section class="page-table m-t-30">
         <div class="col-md-12 col-lg-12">
             <div class="block block--underline">
                 <div class="block__body text-left height-3">
@@ -60,7 +44,16 @@
                                     <td>@i.ToString()</td>
                                     <td>@item.Name</td>
                                     <td>@item.Abbreviation</td>
-                                    <td class="text-ellipsis mn-w-150px w-auto">@item.Description</td>
+                                    <td class="text-ellipsis mn-w-150px w-auto">
+                                        @{
+                                            var info = "None";
+                                            if (item.Description != "")
+                                            {
+                                                info = item.Description;
+                                            }
+                                            <span>@info</span>
+                                        }
+                                    </td>
                                     <td class="display-flex">
                                         <a asp-controller="Measurement" asp-action="Edit" asp-route-Id="@item.Id" class="btn-image btn-image-primary w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/edit.png")" alt="Edit Logo"/></a>
                                         <a asp-controller="Measurement" asp-action="Delete" asp-route-Id="@item.Id"  class="btn-image btn-image-danger w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/trash.png")" alt="Delete Logo"/></a>
@@ -95,21 +88,23 @@
         <script>
             $(document).ready(function() {
                 const handleTable = $('#table-auto');
-                const handleAddMeasurement = $('#add-measurement');
+                const handleCreateMeasurement = $('#create-measurement');
+                const reload = $('div[id$=main-reloading]');
+                const mainPartial = $('#measurement-partial');
                 
     
-                handleAddMeasurement.click(function() {
-                        const url = '@Url.Action("Create", "Measurement")';
-                        $.ajax({
-                            type: 'POST',
-                            url: url,
-                            cache: true
-                        }).done(function(res) {
-                            $('#ExaminationCoursePartial').empty().append(res);
-                            $('div[id$=main-reloading]').hide();
-                        }).fail(function(a, b, c) {
-                            console.log(c);
-                        });
+                handleCreateMeasurement.click(function() {
+                    reload.show();
+                    $.ajax({
+                        type: 'GET',
+                        url: `@Url.Action("Create", "Measurement")`,
+                        cache: true
+                    }).done(function(res) {
+                        mainPartial.empty().append(res);
+                        reload.hide();
+                    }).fail(function(a, b, c) {
+                        console.log(c);
+                    });
                 });  
                 
                 

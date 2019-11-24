@@ -10,13 +10,13 @@
 
         <div class="page-selection m-t-20">
             <div>    
-                <img class="m-x-15" src="@Url.Content("~/assets/icon/sextant.png")" alt="Sextant Logo"/>
+                <img class="m-x-15" src="@Url.Content("~/assets/icon/speedometer.png")" alt="Speedometer Logo"/>
                 <label class="m-l-10 m-t-5">Measurements</label>
             </div>    
             <div>
                 <button id="refresh-page" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
-                    <img src="@Url.Content("~/assets/icon/search.png")" alt="Search Logo"/> 
-                    <span>Search</span>
+                    <img src="@Url.Content("~/assets/icon/refresh.png")" alt="Refresh Logo"/> 
+                    <span>Refresh</span>
                 </button>
             </div>
         </div>
@@ -29,17 +29,17 @@
             const mainPartial = $('#measurement-partial');
            
             handleRefresh.click(function() {
-                    const url = '@Url.Action("Index", "Measurement")';
-                    $.ajax({
-                        type: 'POST',
-                        url: url,
-                        cache: true
-                    }).done(function(res) {
-                        $('#ExaminationCoursePartial').empty().append(res);
-                        $('div[id$=main-reloading]').hide();
-                    }).fail(function(a, b, c) {
-                        console.log(c);
-                    });
+                reload.show();
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("List", "Measurement")`,
+                    cache: true
+                }).done(function(res) {
+                    mainPartial.empty().append(res);
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log(c);
+                });
             });   
             
             reload.show();

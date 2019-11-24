@@ -185,6 +185,7 @@
             <e p="building.png" t="Include" />
             <e p="calendar.png" t="Include" />
             <e p="campus.png" t="Include" />
+            <e p="clock.png" t="Include" />
             <e p="database.png" t="Include" />
             <e p="date.png" t="Include" />
             <e p="disconnected.png" t="Include" />
@@ -197,6 +198,7 @@
             <e p="logout.png" t="Include" />
             <e p="manual.png" t="Include" />
             <e p="profile.png" t="Include" />
+            <e p="refresh.png" t="Include" />
             <e p="remove.png" t="Include" />
             <e p="remove_red.png" t="Include" />
             <e p="report.png" t="Include" />
@@ -209,6 +211,7 @@
             <e p="sextant.png" t="Include" />
             <e p="share.png" t="Include" />
             <e p="sort.png" t="Include" />
+            <e p="speedometer.png" t="Include" />
             <e p="study_course.png" t="Include" />
             <e p="study_seat.png" t="Include" />
             <e p="study_section.png" t="Include" />

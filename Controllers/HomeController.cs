@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Globalization;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Invento.Models;
@@ -8,6 +9,7 @@ using Firebase.Database.Query;
 using Invento.Providers.API;
 using Invento.Providers.List;
 using Microsoft.Extensions.Caching.Memory;
+using Newtonsoft.Json;
 
 namespace Invento.Controllers
 {
@@ -29,9 +31,9 @@ namespace Invento.Controllers
         }
         public IActionResult Index()
         {
-//            Console.WriteLine(ApiProvider.ApiCreateMeasurement());
-//            Console.WriteLine(ApiProvider.ApiMeasurements().Result.Count);
-//            Console.WriteLine("Check Return");
+//            Console.WriteLine(ApiProvider.ApiCreateMeasurement("-LuQjw-lLKluye7vLkTb", "Kilogram", "Kg", "This is kg", true));
+//            Console.WriteLine(ApiProvider.ApiMeasurements().Count);
+            Console.WriteLine("Check Return");
             return View();
         }
 
@@ -73,6 +75,18 @@ namespace Invento.Controllers
         {
             _cache.Set("isLogin", false, _entryOptions);
             return Json(new { isSuccess = true} as dynamic);
+        }
+
+
+        public IActionResult CurrentDateTime()
+        {
+            return Json(new {dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture)} as dynamic);
+        }
+
+
+        public IActionResult CreateMeasurement(string id, string name, string abbreviation, string description, bool status)
+        {
+            return Json(ApiProvider.ApiCreateMeasurement(id, name, abbreviation, description, status));
         }
 
 

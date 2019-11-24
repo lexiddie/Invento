@@ -13,14 +13,15 @@ namespace Invento.Providers.List
     {
         private static readonly ApiProvider ApiProvider = new ApiProvider();
         
-        private List<FirebaseObject<MeasurementDto>> _measurements;
+        private Task<List<FirebaseObject<MeasurementDto>>> _measurements;
         
         public List<Measurement> LoadMeasurements()
         {
             _measurements = ApiProvider.ApiMeasurements();
-            return _measurements.Select(item => new Measurement
+            if (_measurements.Result == null) return new List<Measurement>();
+            return _measurements.Result.Select(item => new Measurement
                 {
-                    Id = item.Key,
+                    Id = item.Object.Id,
                     Name = item.Object.Name,
                     Abbreviation = item.Object.Abbreviation,
                     Description = item.Object.Description,
@@ -31,5 +32,22 @@ namespace Invento.Providers.List
                 })
                 .ToList();
         }
+        
+//        public List<Measurement> LoadMeasurements()
+//        {
+//            _measurements = ApiProvider.ApiMeasurements();
+//            return _measurements.Result.Select(item => new Measurement
+//                {
+//                    Id = item.Object.Id,
+//                    Name = item.Object.Name,
+//                    Abbreviation = item.Object.Abbreviation,
+//                    Description = item.Object.Description,
+//                    IsActive = item.Object.IsActive,
+//                    CreatedDate = ReadDateTime.ReadDate(item.Object.CreatedAt),
+//                    CreatedTime = ReadDateTime.ReadTime(item.Object.CreatedAt),
+//                    CreatedBy = item.Object.CreatedBy
+//                })
+//                .ToList();
+//        }
     }
 }

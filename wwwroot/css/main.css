@@ -2962,10 +2962,102 @@ p {
 .page-form input {
   font-family: "Segoe UI" !important;
   color: black !important;
-  text-transform: uppercase;
 }
 
-.page-form > div {
+.page-form > div:nth-child(1) {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  height: auto;
+  width: inherit;
+  margin-left: 30px;
+  margin-right: 30px;
+  margin-top: 30px;
+}
+
+.page-form > div:nth-child(1) > div {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  margin-top: 30px;
+  height: 50px;
+  width: 100%;
+}
+
+.page-form > div:nth-child(1) > div > label {
+  color: rgba(32, 37, 43, 0.5) !important;
+  height: 35px;
+  width: 140px;
+  text-align: start;
+  line-height: 150%;
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-top: 10px;
+}
+
+.page-form > div:nth-child(1) > div > input {
+  margin-left: 10px;
+  height: 35px;
+  width: calc(100% - 150px);
+}
+
+.page-form > div:nth-child(1) > div > select {
+  margin-left: 10px;
+  height: 35px;
+  width: calc(100% - 150px);
+  font-family: sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  border-radius: 5px;
+  padding: 5px 35px 5px 10px;
+  border: 1px solid;
+  border-color: #d2d2d2;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background-image: url("../assets/icon/arrow_down.png");
+  background-repeat: no-repeat;
+  background-position: right 10px bottom 10px;
+  background-size: 15px;
+}
+
+.page-form > div:last-child {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  height: auto;
+  width: inherit;
+  margin: 30px;
+}
+
+.page-form > div:last-child span {
+  color: #ffffff !important;
+  height: inherit;
+  width: 140px;
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: 500;
+}
+
+.page-form > div:last-child > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -2973,35 +3065,67 @@ p {
       flex-wrap: wrap;
   height: 35px;
   width: 31%;
+  margin-bottom: 30px;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  -webkit-box-pack: start;
-      -ms-flex-pack: start;
-          justify-content: flex-start;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
 }
 
-.page-form > div > label {
-  color: rgba(32, 37, 43, 0.5) !important;
-  height: inherit;
-  width: 140px;
+.page-form > div:last-child > div > button:first-child {
+  height: 30px;
+  width: 150px;
+  margin-right: 15px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   text-align: center;
-  line-height: 150%;
-  font-size: 1.2rem;
-  font-weight: 500;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  vertical-align: middle;
+  line-height: 1.3;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 5px 1px rgba(52, 40, 104, 0.075);
+          box-shadow: 0 1px 5px 1px rgba(52, 40, 104, 0.075);
+  color: #ffffff !important;
+  background-color: #2c304d;
+  border-color: #2c304d;
 }
 
-.page-form > div > input {
-  margin-left: 10px;
-  margin-bottom: 10px;
-  height: 35px;
-  width: calc(100% - 150px);
-  color: #2c304d !important;
-  background-color: transparent;
-  border: 0px;
-  border-radius: 0%;
-  border-bottom: 1px solid;
-  border-color: #2c304d;
+.page-form > div:last-child > div > button:first-child:hover, .page-form > div:last-child > div > button:first-child:focus, .page-form > div:last-child > div > button:first-child:active {
+  cursor: pointer;
+  color: #ffffff;
+  background-color: #21243a;
+  border-color: #21243a;
+}
+
+.page-form > div:last-child > div > button:last-child {
+  height: 30px;
+  width: 150px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  text-align: center;
+  -ms-flex-item-align: center;
+      -ms-grid-row-align: center;
+      align-self: center;
+  vertical-align: middle;
+  line-height: 1.3;
+  border-radius: 5px;
+  -webkit-box-shadow: 0 1px 5px 1px rgba(52, 40, 104, 0.075);
+          box-shadow: 0 1px 5px 1px rgba(52, 40, 104, 0.075);
+  color: #ffffff;
+  background-color: #c2c2c2;
+  border-color: #c2c2c2;
+}
+
+.page-form > div:last-child > div > button:last-child:hover, .page-form > div:last-child > div > button:last-child:focus, .page-form > div:last-child > div > button:last-child:active {
+  color: #ffffff;
+  background-color: #b3b3b3;
+  border-color: #b3b3b3;
 }
 
 .page-assign {

@@ -7,8 +7,8 @@ namespace Invento.Providers.API
 {
     public interface IApiProvider
     {
-        List<FirebaseObject<MeasurementDto>> ApiMeasurements();
+        Task<List<FirebaseObject<MeasurementDto>>> ApiMeasurements();
 
-        Task<dynamic> ApiCreateMeasurement();
+        Task<dynamic> ApiCreateMeasurement(string id, string name, string abbreviation, string description, bool status);
     }
 }

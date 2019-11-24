@@ -44,39 +44,46 @@ namespace Invento.Providers.API
 //            Console.WriteLine(data.ToString());
 //            Console.WriteLine(data.Count);
 //
-//            foreach (var item in data)
+//            foreach (var item in data)    
 //            {
 //                Console.WriteLine($"{item.Key} {item.Object.ToString()}");
 //            }
 //
 //            return data;
 //        }
-        public List<FirebaseObject<MeasurementDto>> ApiMeasurements()
+        public async Task<List<FirebaseObject<MeasurementDto>>> ApiMeasurements()
         {
             var data = new List<FirebaseObject<MeasurementDto>>();
-            Firebase.Child("measurements").OrderByKey().OnceAsync<MeasurementDto>().ContinueWith(task =>
+            await Firebase.Child("measurements").OrderByKey().OnceAsync<MeasurementDto>().ContinueWith(task =>
             {
-                if (task.IsCompleted)
+                if (task.IsCompleted && task.Result != null)
                 {
+                    Console.WriteLine("This is not null");
                     data = task.Result as List<FirebaseObject<MeasurementDto>>;
+                }
+                else
+                {
+                    Console.WriteLine("This is null");
+                    data = new List<FirebaseObject<MeasurementDto>>();
                 }
             });
 //            data = (List<FirebaseObject<MeasurementDto>>) await Firebase.Child("measurements").OrderByKey().OnceAsync<MeasurementDto>();
             return data;
         }
 
-        public async Task<dynamic> ApiCreateMeasurement()
+        public async Task<dynamic> ApiCreateMeasurement(string id, string name, string abbreviation, string description, bool status)
         {
             var measurement = new MeasurementDto
             {
-                Abbreviation = "Kg",
-                Name = "Kilogram",
-                Description = "This is Kilogram",
-                IsActive = true,
+                Id = id,
+                Name = name,
+                Abbreviation = abbreviation,
+                Description = description,
+                IsActive = status,
                 CreatedAt = DateTime.Now.ToString(CultureInfo.InvariantCulture),
                 CreatedBy = "Admin"
             };
-            await Firebase.Child("measurements").PostAsync(measurement);
+            await Firebase.Child("measurements").Child(id).PutAsync(measurement);
             return JsonConvert.SerializeObject(new { isSuccess = true} as dynamic);
         }
     }
