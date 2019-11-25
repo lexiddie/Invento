@@ -1,20 +1,20 @@
-namespace Invento.Models
+namespace Invento.Dtos
 {
-    public class Measurement
+    public class SupplierDto
     {
         public string Id { get; set; }
 
         public string Name { get; set; }
+        
+        public string Email { get; set; }
 
-        public string Abbreviation { get; set; }
+        public string TelephoneNumber { get; set; }
 
         public string Description { get; set; }
         
         public bool IsActive { get; set; }
         
-        public string CreatedDate { get; set; }
-
-        public string CreatedTime { get; set; }
+        public string CreatedAt { get; set; }
 
         public string CreatedBy { get; set; }
     }

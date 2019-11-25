@@ -1,12 +1,14 @@
 namespace Invento.Models
 {
-    public class Measurement
+    public class Supplier
     {
         public string Id { get; set; }
 
         public string Name { get; set; }
+        
+        public string Email { get; set; }
 
-        public string Abbreviation { get; set; }
+        public string TelephoneNumber { get; set; }
 
         public string Description { get; set; }
         

@@ -7,5 +7,7 @@ namespace Invento.Providers.List
     public interface IListProvider
     {
         List<Measurement> LoadMeasurements();
+        
+        List<Supplier> LoadSuppliers();
     }
 }

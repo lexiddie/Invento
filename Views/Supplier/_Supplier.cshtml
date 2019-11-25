@@ -1,4 +1,4 @@
-@model Invento.ViewModels.MeasurementViewModel
+@model Invento.ViewModels.SupplierViewModel
 @using Newtonsoft.Json
 @{
     Layout = null;
@@ -12,7 +12,7 @@
             <label class="m-l-10 m-t-5">Updated At @Model.UpdatedDateTime</label>
         </div>    
         <div>
-            <button id="create-measurement" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
+            <button id="create-supplier" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
                 <img src="@Url.Content("~/assets/icon/add.png")" alt="Add Logo"/> 
                 <span>Add</span>
             </button>
@@ -28,22 +28,24 @@
                             <tr>
                                 <th class="mn-w-40px w-40px"><img class="w-15px h-15px" src="~/assets/icon/sort.png" alt="Sort Logo"/></th>
                                 <th class="mn-w-200px w-200px">Name</th>
-                                <th class="mn-w-150px w-150px">Abbreviation</th>     
+                                <th class="mn-w-150px w-auto">Email</th>     
+                                <th class="mn-w-200px w-200px">Phone Number</th>     
                                 <th class="mn-w-150px w-auto">Description</th>
                                 <th class="mn-w-80px w-80px no-sort">Action</th>
-                                <th class="mn-w-80px w-80px no-sort">Status</th>     
+                                <th class="mn-w-80px w-80px no-sort">Status</th>     s
                                 <th class="mn-w-100px w-100px">Created On</th>
                                 <th class="mn-w-90px w-90px">Created By</th>
                             </tr>
                             </thead>
                             <tbody>        
-                            @foreach (var item in JsonConvert.DeserializeObject<List<Measurement>>(Model.Measurements))
+                            @foreach (var item in JsonConvert.DeserializeObject<List<Supplier>>(Model.Suppliers))
                             {
                                 i++;
                                 <tr>
                                     <td>@i.ToString()</td>
                                     <td>@item.Name</td>
-                                    <td>@item.Abbreviation</td>
+                                    <td class="text-ellipsis mn-w-150px w-auto">@item.Email</td>
+                                    <td>@item.TelephoneNumber</td>
                                     <td class="text-ellipsis mn-w-150px w-auto">
                                         @{
                                             var info = "None";
@@ -55,8 +57,8 @@
                                         }
                                     </td>
                                     <td class="display-flex">
-                                        <a asp-controller="Measurement" asp-action="Edit" asp-route-Id="@item.Id" class="btn-image btn-image-primary w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/edit.png")" alt="Edit Logo"/></a>
-                                        <a asp-controller="Measurement" asp-action="Delete" asp-route-Id="@item.Id"  class="btn-image btn-image-danger w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/trash.png")" alt="Delete Logo"/></a>
+                                        <a asp-controller="Supplier" asp-action="Edit" asp-route-Id="@item.Id" class="btn-image btn-image-primary w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/edit.png")" alt="Edit Logo"/></a>
+                                        <a asp-controller="Supplier" asp-action="Delete" asp-route-Id="@item.Id"  class="btn-image btn-image-danger w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/trash.png")" alt="Delete Logo"/></a>
                                     </td>
                                     <td>
                                         @{
@@ -88,16 +90,16 @@
         <script>
             $(document).ready(function() {
                 const handleTable = $('#table-auto');
-                const handleCreateMeasurement = $('#create-measurement');
+                const handleCreateSupplier = $('#create-supplier');
                 const reload = $('div[id$=main-reloading]');
-                const mainPartial = $('#measurement-partial');
+                const mainPartial = $('#supplier-partial');
                 
     
-                handleCreateMeasurement.click(function() {
+                handleCreateSupplier.click(function() {
                     reload.show();
                     $.ajax({
                         type: 'GET',
-                        url: `@Url.Action("Create", "Measurement")`,
+                        url: `@Url.Action("Create", "Supplier")`,
                         cache: true
                     }).done(function(res) {
                         mainPartial.empty().append(res);

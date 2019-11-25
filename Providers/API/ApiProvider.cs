@@ -14,43 +14,7 @@ namespace Invento.Providers.API
     {
         private static readonly FirebaseClient Firebase = new FirebaseClient("https://invento-e28df.firebaseio.com/");
 
-//        //Completion API
-//        public async Task<List<SemesterCompletion>> CompletionSemesters()
-//        {
-//            List<SemesterCompletion> data;
-//            using (var httpClient = new HttpClient())
-//            {
-//                using (var response = await httpClient.GetAsync(Url + "Semester/SelectList"))
-//                {
-//                    var res = await response.Content.ReadAsStringAsync();
-//                    data = JsonConvert.DeserializeObject<List<SemesterCompletion>>(res);
-//                }
-//            }
-//            return data;
-//        }
-        
-//        public async Task<List<Measurement>> ApiMeasurements()
-//        {
-//            
-//            
-//            //            var data = await firebase
-//            //                .Child("User")
-//            //                .OrderByKey()
-//            //                .StartAt("pterodactyl")
-//            //                .LimitToFirst(2)
-//            //                .OnceAsync<Dinosaur>();
-//
-//            var data = await firebase.Child("measurements").OrderByKey().OnceAsync<Measurement>();
-//            Console.WriteLine(data.ToString());
-//            Console.WriteLine(data.Count);
-//
-//            foreach (var item in data)    
-//            {
-//                Console.WriteLine($"{item.Key} {item.Object.ToString()}");
-//            }
-//
-//            return data;
-//        }
+
         public async Task<List<FirebaseObject<MeasurementDto>>> ApiMeasurements()
         {
             var data = new List<FirebaseObject<MeasurementDto>>();
@@ -68,6 +32,25 @@ namespace Invento.Providers.API
                 }
             });
 //            data = (List<FirebaseObject<MeasurementDto>>) await Firebase.Child("measurements").OrderByKey().OnceAsync<MeasurementDto>();
+            return data;
+        }
+
+        public async Task<List<FirebaseObject<SupplierDto>>> ApiSuppliers()
+        {
+            var data = new List<FirebaseObject<SupplierDto>>();
+            await Firebase.Child("suppliers").OrderByKey().OnceAsync<SupplierDto>().ContinueWith(task =>
+            {
+                if (task.IsCompleted && task.Result != null)
+                {
+                    Console.WriteLine("This is not null");
+                    data = task.Result as List<FirebaseObject<SupplierDto>>;
+                }
+                else
+                {
+                    Console.WriteLine("This is null");
+                    data = new List<FirebaseObject<SupplierDto>>();
+                }
+            });
             return data;
         }
 

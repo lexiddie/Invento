@@ -2,6 +2,7 @@
   <dictionary name="lex">
     <words>
       <w>bootbox</w>
+      <w>orderable</w>
     </words>
   </dictionary>
 </component>
