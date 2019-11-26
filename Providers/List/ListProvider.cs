@@ -17,6 +17,10 @@ namespace Invento.Providers.List
         
         private Task<List<FirebaseObject<SupplierDto>>> _suppliers;
         
+        private Task<List<FirebaseObject<CategoryDto>>> _categories;
+        
+        private Task<List<FirebaseObject<ProductDto>>> _products;
+        
         public List<Measurement> LoadMeasurements()
         {
             _measurements = ApiProvider.ApiMeasurements();
@@ -45,6 +49,42 @@ namespace Invento.Providers.List
                     Name = item.Object.Name,
                     Email = item.Object.Email,
                     TelephoneNumber = item.Object.TelephoneNumber,
+                    Description = item.Object.Description,
+                    IsActive = item.Object.IsActive,
+                    CreatedDate = ReadDateTime.ReadDate(item.Object.CreatedAt),
+                    CreatedTime = ReadDateTime.ReadTime(item.Object.CreatedAt),
+                    CreatedBy = item.Object.CreatedBy
+                })
+                .ToList();
+        }
+
+        public List<Category> LoadCategories()
+        {
+            _categories = ApiProvider.ApiCategories();
+            if (_categories.Result == null) return new List<Category>();
+            return _categories.Result.Select(item => new Category
+                {
+                    Id = item.Object.Id,
+                    Name = item.Object.Name,
+                    Description = item.Object.Description,
+                    IsActive = item.Object.IsActive,
+                    CreatedDate = ReadDateTime.ReadDate(item.Object.CreatedAt),
+                    CreatedTime = ReadDateTime.ReadTime(item.Object.CreatedAt),
+                    CreatedBy = item.Object.CreatedBy
+                })
+                .ToList();
+        }
+
+        public List<Product> LoadProducts()
+        {
+            _products = ApiProvider.ApiProducts();
+            if (_products.Result == null) return new List<Product>();
+            return _products.Result.Select(item => new Product
+                {
+                    Id = item.Object.Id,
+                    Category = item.Object.CategoryId,
+                    Name = item.Object.Name,
+                    Code = item.Object.Code,
                     Description = item.Object.Description,
                     IsActive = item.Object.IsActive,
                     CreatedDate = ReadDateTime.ReadDate(item.Object.CreatedAt),

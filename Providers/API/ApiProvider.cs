@@ -54,6 +54,44 @@ namespace Invento.Providers.API
             return data;
         }
 
+        public async Task<List<FirebaseObject<CategoryDto>>> ApiCategories()
+        {
+            var data = new List<FirebaseObject<CategoryDto>>();
+            await Firebase.Child("categories").OrderByKey().OnceAsync<CategoryDto>().ContinueWith(task =>
+            {
+                if (task.IsCompleted && task.Result != null)
+                {
+                    Console.WriteLine("This is not null");
+                    data = task.Result as List<FirebaseObject<CategoryDto>>;
+                }
+                else
+                {
+                    Console.WriteLine("This is null");
+                    data = new List<FirebaseObject<CategoryDto>>();
+                }
+            });
+            return data;
+        }
+
+        public async Task<List<FirebaseObject<ProductDto>>> ApiProducts()
+        {
+            var data = new List<FirebaseObject<ProductDto>>();
+            await Firebase.Child("products").OrderByKey().OnceAsync<ProductDto>().ContinueWith(task =>
+            {
+                if (task.IsCompleted && task.Result != null)
+                {
+                    Console.WriteLine("This is not null");
+                    data = task.Result as List<FirebaseObject<ProductDto>>;
+                }
+                else
+                {
+                    Console.WriteLine("This is null");
+                    data = new List<FirebaseObject<ProductDto>>();
+                }
+            });
+            return data;
+        }
+
         public async Task<dynamic> ApiCreateMeasurement(string id, string name, string abbreviation, string description, bool status)
         {
             var measurement = new MeasurementDto

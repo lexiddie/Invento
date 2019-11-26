@@ -1,12 +1,12 @@
 @{
-    ViewData["Title"] = "Add Measurement";
+    ViewData["Title"] = "Add Category";
 }
 
 <div>
     <div class="page-info m-t-30">    
         <div>    
             <div>
-                <label class="m-l-15">Add Measurement<span></span></label>
+                <label class="m-l-15">Add Category<span></span></label>
             </div>
             <div>
                 <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
@@ -26,10 +26,6 @@
             <div>
                 <label>Name</label>
                 <input id="textfield-name" type="text" class="main-textfield"/>
-            </div>
-            <div>
-                <label>Abbreviation</label>
-                <input id="textfield-abbreviation" type="text" class="main-textfield"/>
             </div>
             <div>    
                 <label>Description</label>
@@ -60,14 +56,12 @@
     <script>
         $(document).ready(function() {
             const reload = $('div[id$=main-reloading]');
-            const mainPartial = $('#measurement-partial');
+            const mainPartial = $('#category-partial');
             const database = firebase.database();
             const textFieldName = $('#textfield-name');
-            const textFieldAbbreviation = $('#textfield-abbreviation');
             const textFieldDescription = $('#textfield-description');
             const textFieldStatus = $('#textfield-status');
             
-            check();
             $('#back-to-index').click(function() {
                 back();
             });
@@ -84,7 +78,7 @@
                 reload.show();  
                 $.ajax({
                     type: 'GET',
-                    url: `@Url.Action("List", "Measurement")`,
+                    url: `@Url.Action("List", "Category")`,
                     cache: true
                 }).done(function(res) {
                         mainPartial.empty().append(res);
@@ -97,36 +91,15 @@
             
             function save() {
                 $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
-                    const userKey = database.ref().child('measurements').push().key;
-                    const data = {Id: userKey, Name: textFieldName.val().trimEnd(), Abbreviation: textFieldAbbreviation.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
-                    database.ref().child('measurements').child(userKey).set(data);
+                    const userKey = database.ref().child('categories').push().key;
+                    const data = {Id: userKey, Name: textFieldName.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                    database.ref().child('categories').child(userKey).set(data);
                     back();
                 }).fail(function(a, b, c) {
                     console.log('It is error');
                     console.log(c);
                 });
             }
-            
-            function check() {
-                const data = database.ref().child('measurements');
-                data.on('value', function(snapshot) {
-                    // for(let i = 0; i < snapshot.children(); i++) {
-                    //     console.log(snapshot[i]['value']);
-                    // } 
-                    let check = false;
-                    snapshot.forEach((child) => {
-                        // console.log(child.key, child.val());
-                        // console.log(child.val()['Name']);
-                        if (child.val()['Name'].toLowerCase() === 'kilogram') {
-                            check = true;
-                        }
-                    });
-                    console.log(check);
-                })
-                
-            }
-            
-            
         });
     </script>
 </div>

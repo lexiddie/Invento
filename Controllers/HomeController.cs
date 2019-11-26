@@ -90,6 +90,12 @@ namespace Invento.Controllers
         }
 
 
+        public IActionResult CompletionCategories()
+        {
+            return Json(ListProvider.LoadCategories());
+        }
+
+
         public async Task Firebase()
         {
             var firebase = new FirebaseClient("https://invento-e28df.firebaseio.com/");

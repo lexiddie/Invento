@@ -9,5 +9,9 @@ namespace Invento.Providers.List
         List<Measurement> LoadMeasurements();
         
         List<Supplier> LoadSuppliers();
+        
+        List<Category> LoadCategories();
+        
+        List<Product> LoadProducts();
     }
 }

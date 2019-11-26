@@ -16,11 +16,14 @@
         <e p="ProductController.cs" t="Include" />
         <e p="PurchaseController.cs" t="Include" />
         <e p="SupplierController.cs" t="Include" />
+        <e p="UsageController.cs" t="Include" />
         <e p="UserController.cs" t="Include" />
       </e>
       <e p="database.rules.json" t="Include" />
       <e p="Dtos" t="Include">
+        <e p="CategoryDto.cs" t="Include" />
         <e p="MeasurementDto.cs" t="Include" />
+        <e p="ProductDto.cs" t="Include" />
         <e p="SupplierDto.cs" t="Include" />
       </e>
       <e p="firebase.json" t="Include" />
@@ -32,8 +35,10 @@
       <e p="Invento.csproj" t="IncludeRecursive" />
       <e p="Invento.sln" t="IncludeFlat" />
       <e p="Models" t="Include">
+        <e p="Category.cs" t="Include" />
         <e p="ErrorViewModel.cs" t="Include" />
         <e p="Measurement.cs" t="Include" />
+        <e p="Product.cs" t="Include" />
         <e p="Supplier.cs" t="Include" />
       </e>
       <e p="n" t="Include">
@@ -124,13 +129,18 @@
       <e p="Startup.cs" t="Include" />
       <e p="storage.rules" t="Include" />
       <e p="ViewModels" t="Include">
+        <e p="CategoryViewModel.cs" t="Include" />
         <e p="MeasurementViewModel.cs" t="Include" />
+        <e p="ProductViewModel.cs" t="Include" />
         <e p="SupplierViewModel.cs" t="Include" />
       </e>
       <e p="Views" t="Include">
         <e p="_ViewImports.cshtml" t="Include" />
         <e p="_ViewStart.cshtml" t="Include" />
         <e p="Category" t="Include">
+          <e p="_Category.cshtml" t="Include" />
+          <e p="_CreateModal.cshtml" t="Include" />
+          <e p="_EditModal.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Dashboard" t="Include">
@@ -151,6 +161,9 @@
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Product" t="Include">
+          <e p="_CreateModal.cshtml" t="Include" />
+          <e p="_EditModal.cshtml" t="Include" />
+          <e p="_Product.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Purchase" t="Include">
@@ -170,6 +183,10 @@
           <e p="_CreateModal.cshtml" t="Include" />
           <e p="_EditModal.cshtml" t="Include" />
           <e p="_Supplier.cshtml" t="Include" />
+          <e p="EditModal.cshtml" t="Include" />
+          <e p="Index.cshtml" t="Include" />
+        </e>
+        <e p="Usage" t="Include">
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="User" t="Include">
@@ -191,6 +208,7 @@
             <e p="building.png" t="Include" />
             <e p="calendar.png" t="Include" />
             <e p="campus.png" t="Include" />
+            <e p="category.png" t="Include" />
             <e p="clock.png" t="Include" />
             <e p="database.png" t="Include" />
             <e p="date.png" t="Include" />
@@ -203,6 +221,7 @@
             <e p="info.png" t="Include" />
             <e p="logout.png" t="Include" />
             <e p="manual.png" t="Include" />
+            <e p="product.png" t="Include" />
             <e p="profile.png" t="Include" />
             <e p="refresh.png" t="Include" />
             <e p="remove.png" t="Include" />
