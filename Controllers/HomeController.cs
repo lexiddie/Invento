@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.Globalization;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Invento.Models;
 using Firebase.Database;
 using Firebase.Database.Query;
+using Invento.Helpers;
 using Invento.Providers.API;
 using Invento.Providers.List;
 using Microsoft.Extensions.Caching.Memory;
@@ -93,6 +95,17 @@ namespace Invento.Controllers
         public IActionResult CompletionCategories()
         {
             return Json(ListProvider.LoadCategories());
+        }
+        
+        public IActionResult CompletionMeasurements()
+        {
+            return Json(ListProvider.LoadMeasurements());
+        }
+
+        public IActionResult CompletionCountries()
+        {
+            var json = ReadJson.LoadJson("./data/json/Countries.json");
+            return Json(JsonConvert.DeserializeObject<List<Country>>(json));
         }
 
 

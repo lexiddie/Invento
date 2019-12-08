@@ -14,6 +14,12 @@ namespace Invento.Providers.API
         Task<List<FirebaseObject<CategoryDto>>> ApiCategories();
         
         Task<List<FirebaseObject<ProductDto>>> ApiProducts();
+        
+        Task<List<FirebaseObject<PurchaseDto>>> ApiPurchase();
+        
+        Task<List<FirebaseObject<UsageDto>>> ApiUsage();
+        
+        Task<List<FirebaseObject<LeftoverDto>>> ApiLeftover();
 
         Task<dynamic> ApiCreateMeasurement(string id, string name, string abbreviation, string description, bool status);
     }

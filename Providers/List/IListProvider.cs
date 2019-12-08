@@ -13,5 +13,11 @@ namespace Invento.Providers.List
         List<Category> LoadCategories();
         
         List<Product> LoadProducts();
+        
+        List<Purchase> LoadPurchases();
+        
+        List<Usage> LoadUsages();
+        
+        List<Leftover> LoadLeftovers();
     }
 }

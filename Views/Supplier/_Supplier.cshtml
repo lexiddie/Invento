@@ -29,7 +29,9 @@
                                 <th class="mn-w-40px w-40px"><img class="w-15px h-15px" src="~/assets/icon/sort.png" alt="Sort Logo"/></th>
                                 <th class="mn-w-200px w-200px">Name</th>
                                 <th class="mn-w-150px w-auto">Email</th>     
-                                <th class="mn-w-200px w-200px">Phone Number</th>     
+                                <th class="mn-w-150px w-150px">Phone Number</th>     
+                                <th class="mn-w-150px w-150px">Country</th>     
+                                <th class="mn-w-150px w-auto">Address</th>     
                                 <th class="mn-w-150px w-auto">Description</th>
                                 <th class="mn-w-80px w-80px no-sort">Action</th>
                                 <th class="mn-w-80px w-80px no-sort">Status</th>     s
@@ -46,6 +48,8 @@
                                     <td>@item.Name</td>
                                     <td class="text-ellipsis mn-w-150px w-auto">@item.Email</td>
                                     <td>@item.TelephoneNumber</td>
+                                    <td>@item.Country</td>
+                                    <td class="text-ellipsis mn-w-150px w-auto">@item.Address</td>
                                     <td class="text-ellipsis mn-w-150px w-auto">
                                         @{
                                             var info = "None";

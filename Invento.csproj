@@ -18,6 +18,7 @@
 
 
     <ItemGroup>
+      <Folder Include="Data\Json" />
       <Folder Include="Helpers" />
     </ItemGroup>
 

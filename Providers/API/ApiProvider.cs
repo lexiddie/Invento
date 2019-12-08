@@ -42,12 +42,10 @@ namespace Invento.Providers.API
             {
                 if (task.IsCompleted && task.Result != null)
                 {
-                    Console.WriteLine("This is not null");
                     data = task.Result as List<FirebaseObject<SupplierDto>>;
                 }
                 else
                 {
-                    Console.WriteLine("This is null");
                     data = new List<FirebaseObject<SupplierDto>>();
                 }
             });
@@ -61,12 +59,10 @@ namespace Invento.Providers.API
             {
                 if (task.IsCompleted && task.Result != null)
                 {
-                    Console.WriteLine("This is not null");
                     data = task.Result as List<FirebaseObject<CategoryDto>>;
                 }
                 else
                 {
-                    Console.WriteLine("This is null");
                     data = new List<FirebaseObject<CategoryDto>>();
                 }
             });
@@ -80,13 +76,62 @@ namespace Invento.Providers.API
             {
                 if (task.IsCompleted && task.Result != null)
                 {
-                    Console.WriteLine("This is not null");
                     data = task.Result as List<FirebaseObject<ProductDto>>;
                 }
                 else
                 {
-                    Console.WriteLine("This is null");
                     data = new List<FirebaseObject<ProductDto>>();
+                }
+            });
+            return data;
+        }
+
+        public async Task<List<FirebaseObject<PurchaseDto>>> ApiPurchase()
+        {
+            var data = new List<FirebaseObject<PurchaseDto>>();
+            await Firebase.Child("purchases").OrderByKey().OnceAsync<PurchaseDto>().ContinueWith(task =>
+            {
+                if (task.IsCompleted && task.Result != null)
+                {
+                    data = task.Result as List<FirebaseObject<PurchaseDto>>;
+                }
+                else
+                {
+                    data = new List<FirebaseObject<PurchaseDto>>();
+                }
+            });
+            return data;
+        }
+
+        public async Task<List<FirebaseObject<UsageDto>>> ApiUsage()
+        {
+            var data = new List<FirebaseObject<UsageDto>>();
+            await Firebase.Child("usages").OrderByKey().OnceAsync<UsageDto>().ContinueWith(task =>
+            {
+                if (task.IsCompleted && task.Result != null)
+                {
+                    data = task.Result as List<FirebaseObject<UsageDto>>;
+                }
+                else
+                {
+                    data = new List<FirebaseObject<UsageDto>>();
+                }
+            });
+            return data;
+        }
+
+        public async Task<List<FirebaseObject<LeftoverDto>>> ApiLeftover()
+        {
+            var data = new List<FirebaseObject<LeftoverDto>>();
+            await Firebase.Child("leftovers").OrderByKey().OnceAsync<LeftoverDto>().ContinueWith(task =>
+            {
+                if (task.IsCompleted && task.Result != null)
+                {
+                    data = task.Result as List<FirebaseObject<LeftoverDto>>;
+                }
+                else
+                {
+                    data = new List<FirebaseObject<LeftoverDto>>();
                 }
             });
             return data;
@@ -98,7 +143,6 @@ namespace Invento.Providers.API
             {
                 Id = id,
                 Name = name,
-                Abbreviation = abbreviation,
                 Description = description,
                 IsActive = status,
                 CreatedAt = DateTime.Now.ToString(CultureInfo.InvariantCulture),

@@ -27,10 +27,6 @@
                 <label>Name</label>
                 <input id="textfield-name" type="text" class="main-textfield"/>
             </div>
-            <div>
-                <label>Abbreviation</label>
-                <input id="textfield-abbreviation" type="text" class="main-textfield"/>
-            </div>
             <div>    
                 <label>Description</label>
                 <input id="textfield-description" type="text" class="main-textfield"/>
@@ -63,7 +59,6 @@
             const mainPartial = $('#measurement-partial');
             const database = firebase.database();
             const textFieldName = $('#textfield-name');
-            const textFieldAbbreviation = $('#textfield-abbreviation');
             const textFieldDescription = $('#textfield-description');
             const textFieldStatus = $('#textfield-status');
             
@@ -98,7 +93,7 @@
             function save() {
                 $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
                     const userKey = database.ref().child('measurements').push().key;
-                    const data = {Id: userKey, Name: textFieldName.val().trimEnd(), Abbreviation: textFieldAbbreviation.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                    const data = {Id: userKey, Name: textFieldName.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
                     database.ref().child('measurements').child(userKey).set(data);
                     back();
                 }).fail(function(a, b, c) {

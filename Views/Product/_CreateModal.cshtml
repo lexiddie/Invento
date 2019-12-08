@@ -29,6 +29,12 @@
                 </select>
             </div>
             <div>
+                <label>Measurement</label>
+                <select id="select-measurement">
+                    <option selected="selected" disabled="disabled">Select Measurement</option>
+                </select>
+            </div>
+            <div>
                 <label>Name</label>
                 <input id="textfield-name" type="text" class="main-textfield"/>
             </div>
@@ -68,6 +74,7 @@
             const mainPartial = $('#product-partial');
             const database = firebase.database();
             const categorySelect = $('#select-category');
+            const measurementSelect = $('#select-measurement');
             const textFieldName = $('#textfield-name');
             const textFieldCode = $('#textfield-code');
             const textFieldDescription = $('#textfield-description');
@@ -80,6 +87,16 @@
                 $.each(res, function(index, data) {
                     console.log(data);
                     categorySelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
+                });
+                reload.hide();
+            });
+            $.getJSON('@Url.Action("CompletionMeasurements", "Home")', function(res) {
+                reload.show();
+                measurementSelect.empty();
+                measurementSelect.append('<option selected=selected disabled=disabled>Select Measurement</option>');         
+                $.each(res, function(index, data) {
+                    console.log(data);
+                    measurementSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
                 });
                 reload.hide();
             });

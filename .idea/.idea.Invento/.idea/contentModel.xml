@@ -11,6 +11,7 @@
         <e p="CategoryController.cs" t="Include" />
         <e p="DashboardController.cs" t="Include" />
         <e p="HomeController.cs" t="Include" />
+        <e p="LeftoverController.cs" t="Include" />
         <e p="LoginController.cs" t="Include" />
         <e p="MeasurementController.cs" t="Include" />
         <e p="ProductController.cs" t="Include" />
@@ -19,12 +20,20 @@
         <e p="UsageController.cs" t="Include" />
         <e p="UserController.cs" t="Include" />
       </e>
+      <e p="Data" t="Include">
+        <e p="json" t="Include">
+          <e p="Countries.json" t="Include" />
+        </e>
+      </e>
       <e p="database.rules.json" t="Include" />
       <e p="Dtos" t="Include">
         <e p="CategoryDto.cs" t="Include" />
+        <e p="LeftoverDto.cs" t="Include" />
         <e p="MeasurementDto.cs" t="Include" />
         <e p="ProductDto.cs" t="Include" />
+        <e p="PurchaseDto.cs" t="Include" />
         <e p="SupplierDto.cs" t="Include" />
+        <e p="UsageDto.cs" t="Include" />
       </e>
       <e p="firebase.json" t="Include" />
       <e p="Helpers" t="Include">
@@ -36,10 +45,14 @@
       <e p="Invento.sln" t="IncludeFlat" />
       <e p="Models" t="Include">
         <e p="Category.cs" t="Include" />
+        <e p="Country.cs" t="Include" />
         <e p="ErrorViewModel.cs" t="Include" />
+        <e p="Leftover.cs" t="Include" />
         <e p="Measurement.cs" t="Include" />
         <e p="Product.cs" t="Include" />
+        <e p="Purchase.cs" t="Include" />
         <e p="Supplier.cs" t="Include" />
+        <e p="Usage.cs" t="Include" />
       </e>
       <e p="n" t="Include">
         <e p="404.html" t="Include" />
@@ -150,6 +163,9 @@
           <e p="ErrorPage.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
           <e p="Privacy.cshtml" t="Include" />
+        </e>
+        <e p="Leftover" t="Include">
+          <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Login" t="Include">
           <e p="Index.cshtml" t="Include" />
