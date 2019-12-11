@@ -19,5 +19,7 @@ namespace Invento.Providers.List
         List<Usage> LoadUsages();
         
         List<Leftover> LoadLeftovers();
+        
+        List<Inventory> LoadInventories();
     }
 }

@@ -6,7 +6,7 @@
     <div class="page-info m-t-30">    
         <div>    
             <div>
-                <label class="m-l-15">Add Measurement<span></span></label>
+                <label class="m-l-15">Add Leftover<span></span></label>
             </div>
             <div>
                 <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
@@ -23,35 +23,22 @@
     <div class="page-form m-t-30">
         <div>
             <div>
-                <label>Category</label>
-                <select id="select-category">
-                    <option selected="selected" disabled="disabled">Select Category</option>
+                <label>Product</label>
+                <select id="select-product">
+                    <option selected="selected" disabled="disabled">Select Product</option>
                 </select>
             </div>
-            <div>
-                <label>Measurement</label>
-                <select id="select-measurement">
-                    <option selected="selected" disabled="disabled">Select Measurement</option>
-                </select>
+            <div id="handle-available" style="display: none;">
+                <label>Available</label>
+                <input id="textfield-available" type="text" readonly="readonly" class="display-textfield"/>
             </div>
             <div>
-                <label>Name</label>
-                <input id="textfield-name" type="text" class="main-textfield"/>
-            </div>
-            <div>
-                <label>Code</label>
-                <input id="textfield-code" type="text" class="main-textfield"/>
+                <label>Quantity</label>
+                <input id="textfield-quantity" type="text" class="main-textfield"/>
             </div>
             <div>
                 <label>Description</label>
                 <input id="textfield-description" type="text" class="main-textfield"/>
-            </div>
-            <div>
-                <label>Status</label>
-                <select id="textfield-status">
-                    <option selected="selected" value="true">Active</option>
-                    <option value="false">Inactive</option>
-                </select>
             </div>
         </div>
         
@@ -71,37 +58,53 @@
     <script>
         $(document).ready(function() {
             const reload = $('div[id$=main-reloading]');
-            const mainPartial = $('#product-partial');
+            const mainPartial = $('#leftover-partial');
             const database = firebase.database();
-            const categorySelect = $('#select-category');
-            const measurementSelect = $('#select-measurement');
-            const textFieldName = $('#textfield-name');
-            const textFieldCode = $('#textfield-code');
+            const handleAvailable = $('#handle-available');
+            const productSelect = $('#select-product');
+            const textFieldAvailable = $('#textfield-available');
+            const textFieldQuantity = $('#textfield-quantity');
             const textFieldDescription = $('#textfield-description');
-            const textFieldStatus = $('#textfield-status');
+            let products;
+            let leftoverCode;
             
-            $.getJSON('@Url.Action("CompletionCategories", "Home")', function(res) {
-                reload.show();
-                categorySelect.empty();
-                categorySelect.append('<option selected=selected disabled=disabled>Select Category</option>');         
-                $.each(res, function(index, data) {
-                    console.log(data);
-                    categorySelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
-                });
-                reload.hide();
+            $.getJSON('@Url.Action("GenerateLeftover", "Home")', function(res) {
+                leftoverCode = res['leftoverCode'];
             });
-            $.getJSON('@Url.Action("CompletionMeasurements", "Home")', function(res) {
-                reload.show();
-                measurementSelect.empty();
-                measurementSelect.append('<option selected=selected disabled=disabled>Select Measurement</option>');         
-                $.each(res, function(index, data) {
-                    console.log(data);
-                    measurementSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
-                });
+            
+            $.when(
+                reload.show(),
+                $.getJSON('@Url.Action("CompletionProducts", "Home")', function(res) {
+                    products = res;
+                    productSelect.empty();
+                    productSelect.append('<option selected=selected disabled=disabled>Select Product</option>');         
+                    $.each(res, function(index, data) {
+                        productSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
+                    })
+                })
+            ).then(function() {
                 reload.hide();
             });
             
-            check();
+            productSelect.change(function() {
+                const index = $(this).prop('selectedIndex');
+                reload.show();
+                $.ajax({
+                    type: 'POST',
+                    url: `@Url.Action("LoadAvailable", "Home")?productId=${productSelect.val()}`,
+                    cache: true,
+                    dataType: 'json'
+                }).done(function(res) {
+                    textFieldAvailable.val(`${res['available']} ${products[index - 1]['measurement']}`);
+                    handleAvailable.show();
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+
+            });
+            
             $('#back-to-index').click(function() {
                 back();
             });
@@ -113,16 +116,16 @@
             $('#handle-save').click(function() {
                 save();
             });
-                
+            
             function back() {
                 reload.show();  
                 $.ajax({
                     type: 'GET',
-                    url: `@Url.Action("List", "Product")`,
+                    url: `@Url.Action("List", "Leftover")`,
                     cache: true
-                }).done(function(res) { 
-                        mainPartial.empty().append(res);
-                    reload.hide();
+                }).done(function(res) {
+                    mainPartial.empty().append(res);
+                    reload.hide();      
                 }).fail(function(a, b, c) {
                     console.log('It is error');
                     console.log(c);
@@ -131,15 +134,17 @@
             
             function save() {
                 $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
-                    const userKey = database.ref().child('products').push().key;
-                    const data = {Id: userKey, CategoryId: categorySelect.val(), MeasurementId: measurementSelect.val(), Name: textFieldName.val().trimEnd(), Code: textFieldCode.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
-                    database.ref().child('products').child(userKey).set(data);
+                    const userKey = database.ref().child('leftovers').push().key;
+                    const data = {Id: userKey, Code: leftoverCode, ProductId: productSelect.val(), Quantity: textFieldQuantity.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsVoid: false, CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                    database.ref().child('leftovers').child(userKey).set(data);
                     back();
                 }).fail(function(a, b, c) {
                     console.log('It is error');
                     console.log(c);
                 });
             }
+            
+
             
             function check() {
                 const data = database.ref().child('measurements');

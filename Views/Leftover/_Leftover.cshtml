@@ -1,4 +1,4 @@
-@model Invento.ViewModels.ProductViewModel
+@model Invento.ViewModels.LeftoverViewModel
 @using Newtonsoft.Json
 @{
     Layout = null;
@@ -12,7 +12,7 @@
             <label class="m-l-10 m-t-5">Updated At @Model.UpdatedDateTime</label>
         </div>    
         <div>
-            <button id="create-measurement" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
+            <button id="create-leftover" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
                 <img src="@Url.Content("~/assets/icon/add.png")" alt="Add Logo"/> 
                 <span>Add</span>
             </button>
@@ -27,10 +27,10 @@
                             <thead>
                             <tr>
                                 <th class="mn-w-40px w-40px"><img class="w-15px h-15px" src="~/assets/icon/sort.png" alt="Sort Logo"/></th>
-                                <th class="mn-w-200px w-200px">Category</th>
+                                <th class="mn-w-150px w-150px">Code</th>
+                                <th class="mn-w-200px w-200px">Product</th>
                                 <th class="mn-w-200px w-200px">Unit of Measurement</th>
-                                <th class="mn-w-200px w-200px">Name</th>
-                                <th class="mn-w-200px w-200px">Code</th>
+                                <th class="mn-w-150px w-150px">Quantity</th>
                                 <th class="mn-w-150px w-auto">Description</th>
                                 <th class="mn-w-80px w-80px no-sort">Action</th>
                                 <th class="mn-w-80px w-80px no-sort">Status</th>     
@@ -39,15 +39,15 @@
                             </tr>
                             </thead>
                             <tbody>        
-                            @foreach (var item in JsonConvert.DeserializeObject<List<Product>>(Model.Products))
+                            @foreach (var item in JsonConvert.DeserializeObject<List<Leftover>>(Model.Leftovers))
                             {
                                 i++;
                                 <tr>
                                     <td>@i.ToString()</td>
-                                    <td>@item.Category</td>
-                                    <td>@item.Measurement</td>
-                                    <td>@item.Name</td>
                                     <td>@item.Code</td>
+                                    <td>@item.Product</td>
+                                    <td>@item.Measurement</td>
+                                    <td>@item.Quantity</td>
                                     <td class="text-ellipsis mn-w-150px w-auto">
                                         @{
                                             var info = "None";
@@ -59,17 +59,16 @@
                                         }
                                     </td>
                                     <td class="display-flex">
-                                        <a asp-controller="Product" asp-action="Edit" asp-route-Id="@item.Id" class="btn-image btn-image-primary w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/edit.png")" alt="Edit Logo"/></a>
                                         <a asp-controller="Product" asp-action="Delete" asp-route-Id="@item.Id"  class="btn-image btn-image-danger w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/trash.png")" alt="Delete Logo"/></a>
                                     </td>
                                     <td>
                                         @{
-                                            var status = "Active";
-                                            var statusClass = "bg-success";
-                                            if (!item.IsActive) 
+                                            var status = "Void";
+                                            var statusClass = "bg-void";
+                                            if (!item.IsVoid) 
                                             {
-                                                status = "Inactive";
-                                                statusClass = "bg-danger";
+                                                status = "Success";
+                                                statusClass = "bg-success";
                                             }
                                             <span class="label-status  @statusClass">@status</span>
                                         }
@@ -92,16 +91,16 @@
         <script>
             $(document).ready(function() {
                 const handleTable = $('#table-auto');
-                const handleCreateMeasurement = $('#create-measurement');
+                const handleCreateLeftover= $('#create-leftover');
                 const reload = $('div[id$=main-reloading]');
-                const mainPartial = $('#product-partial');
+                const mainPartial = $('#leftover-partial');
                 
     
-                handleCreateMeasurement.click(function() {
+                handleCreateLeftover.click(function() {
                     reload.show();
                     $.ajax({
                         type: 'GET',
-                        url: `@Url.Action("Create", "Product")`,
+                        url: `@Url.Action("Create", "Leftover")`,
                         cache: true
                     }).done(function(res) {
                         mainPartial.empty().append(res);
@@ -128,9 +127,7 @@
                 });
                 
                 function handleDelete(url) {
-                    console.log('Working next url.');
-                    console.log(url);
-                    bootbox.confirm('Are you sure you want to delete this course?', function(res){
+                    bootbox.confirm('Are you sure you want to void this purchase?', function(res){
                         if (res) {
                             $.post(url).done(function(res) {
                                 $('div[id$=main-reloading]').hide();

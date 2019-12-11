@@ -10,6 +10,7 @@
       <e p="Controllers" t="Include">
         <e p="CategoryController.cs" t="Include" />
         <e p="DashboardController.cs" t="Include" />
+        <e p="ExploreController.cs" t="Include" />
         <e p="HomeController.cs" t="Include" />
         <e p="LeftoverController.cs" t="Include" />
         <e p="LoginController.cs" t="Include" />
@@ -47,6 +48,7 @@
         <e p="Category.cs" t="Include" />
         <e p="Country.cs" t="Include" />
         <e p="ErrorViewModel.cs" t="Include" />
+        <e p="Inventory.cs" t="Include" />
         <e p="Leftover.cs" t="Include" />
         <e p="Measurement.cs" t="Include" />
         <e p="Product.cs" t="Include" />
@@ -143,9 +145,14 @@
       <e p="storage.rules" t="Include" />
       <e p="ViewModels" t="Include">
         <e p="CategoryViewModel.cs" t="Include" />
+        <e p="DashboardViewModel.cs" t="Include" />
+        <e p="ExploreViewModel.cs" t="Include" />
+        <e p="LeftoverViewModel.cs" t="Include" />
         <e p="MeasurementViewModel.cs" t="Include" />
         <e p="ProductViewModel.cs" t="Include" />
+        <e p="PurchaseViewModel.cs" t="Include" />
         <e p="SupplierViewModel.cs" t="Include" />
+        <e p="UsageViewModel.cs" t="Include" />
       </e>
       <e p="Views" t="Include">
         <e p="_ViewImports.cshtml" t="Include" />
@@ -159,12 +166,18 @@
         <e p="Dashboard" t="Include">
           <e p="Index.cshtml" t="Include" />
         </e>
+        <e p="Explore" t="Include">
+          <e p="_Inventory.cshtml" t="Include" />
+          <e p="Index.cshtml" t="Include" />
+        </e>
         <e p="Home" t="Include">
           <e p="ErrorPage.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
           <e p="Privacy.cshtml" t="Include" />
         </e>
         <e p="Leftover" t="Include">
+          <e p="_CreateModal.cshtml" t="Include" />
+          <e p="_Leftover.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Login" t="Include">
@@ -183,6 +196,8 @@
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Purchase" t="Include">
+          <e p="_CreateModal.cshtml" t="Include" />
+          <e p="_Purchase.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Shared" t="Include">
@@ -203,6 +218,8 @@
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Usage" t="Include">
+          <e p="_CreateModal.cshtml" t="Include" />
+          <e p="_Usage.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="User" t="Include">
@@ -235,10 +252,12 @@
             <e p="examination_section.png" t="Include" />
             <e p="home.png" t="Include" />
             <e p="info.png" t="Include" />
+            <e p="leftover.png" t="Include" />
             <e p="logout.png" t="Include" />
             <e p="manual.png" t="Include" />
             <e p="product.png" t="Include" />
             <e p="profile.png" t="Include" />
+            <e p="purchase.png" t="Include" />
             <e p="refresh.png" t="Include" />
             <e p="remove.png" t="Include" />
             <e p="remove_red.png" t="Include" />
@@ -262,7 +281,9 @@
             <e p="timeslot.png" t="Include" />
             <e p="trash.png" t="Include" />
             <e p="unassigned.png" t="Include" />
+            <e p="usage.png" t="Include" />
             <e p="user.png" t="Include" />
+            <e p="visual.png" t="Include" />
             <e p="visualization.png" t="Include" />
           </e>
           <e p="logo" t="Include">

@@ -1682,6 +1682,10 @@ Utilities for controlling the display box type of an element. */
   background-color: #ffa801 !important;
 }
 
+.bg-void {
+  background-color: #6a1b9a !important;
+}
+
 .bg-danger {
   background-color: #ff5964 !important;
 }
@@ -6853,6 +6857,16 @@ div.dataTables_filter input-search:focus {
 }
 
 .main-textfield:focus {
+  border-color: #2c304d;
+}
+
+.display-textfield {
+  color: #555555;
+  background-color: transparent;
+  padding: 5px 35px 5px 10px;
+  border: 0px;
+  border-radius: 0%;
+  border-bottom: 1px solid;
   border-color: #2c304d;
 }
 

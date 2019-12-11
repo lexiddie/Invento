@@ -8,9 +8,8 @@ using Newtonsoft.Json;
 
 namespace Invento.Controllers
 {
-    [Route("Leftover")]
-    public class LeftoverController : Controller
-    {        
+    public class ExploreController : Controller
+    {
         private static readonly ListProvider ListProvider = new ListProvider();
         
         [HttpGet]
@@ -25,18 +24,11 @@ namespace Invento.Controllers
         public IActionResult List()
         {
             var dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-            var viewModel = new LeftoverViewModel{
+            var viewModel = new ExploreViewModel{
                 UpdatedDateTime = $"{ReadDateTime.ReadDate(dateTime)} {ReadDateTime.ReadTime(dateTime)}",
-                Leftovers = JsonConvert.SerializeObject(ListProvider.LoadLeftovers())
+                Inventories = JsonConvert.SerializeObject(ListProvider.LoadInventories())
             };
-            return PartialView("_Leftover", viewModel);
-        }
-
-        [HttpGet]
-        [Route("Create")]
-        public IActionResult Create()
-        {
-            return PartialView("_CreateModal");
+            return PartialView("_Inventory", viewModel);
         }
     }
 }

@@ -44,3 +44,13 @@ div.dataTables_filter {
     border-color: $primary;
   }
 }
+
+.display-textfield {
+  color: $black;
+  background-color: transparent;
+  padding: 5px 35px 5px 10px;
+  border: 0px;
+  border-radius: 0%;
+  border-bottom: 1px solid;
+  border-color: $primary;
+}

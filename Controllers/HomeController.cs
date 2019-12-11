@@ -17,6 +17,8 @@ namespace Invento.Controllers
 {
     public class HomeController : Controller
     {
+        private new const string Url = "https://invento-e28df.firebaseio.com/";
+        
         private static readonly ApiProvider ApiProvider = new ApiProvider();
         private static readonly ListProvider ListProvider = new ListProvider();
 
@@ -82,15 +84,13 @@ namespace Invento.Controllers
 
         public IActionResult CurrentDateTime()
         {
-            return Json(new {dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture)} as dynamic);
+            return Json(new { dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture)} as dynamic );
         }
-
 
         public IActionResult CreateMeasurement(string id, string name, string abbreviation, string description, bool status)
         {
             return Json(ApiProvider.ApiCreateMeasurement(id, name, abbreviation, description, status));
         }
-
 
         public IActionResult CompletionCategories()
         {
@@ -101,6 +101,16 @@ namespace Invento.Controllers
         {
             return Json(ListProvider.LoadMeasurements());
         }
+        
+        public IActionResult CompletionProducts()
+        {
+            return Json(ListProvider.LoadProducts());
+        }
+
+        public IActionResult CompletionSuppliers()
+        {
+            return Json(ListProvider.LoadSuppliers());
+        }
 
         public IActionResult CompletionCountries()
         {
@@ -108,10 +118,29 @@ namespace Invento.Controllers
             return Json(JsonConvert.DeserializeObject<List<Country>>(json));
         }
 
+        public IActionResult GeneratePurchase()
+        {
+            return Json(new { purchaseCode = ListProvider.GeneratePurchase()} as dynamic);
+        }
+        
+        public IActionResult GenerateUsage()
+        {
+            return Json(new { usageCode = ListProvider.GenerateUsage()} as dynamic);
+        }
+        
+        public IActionResult GenerateLeftover()
+        {
+            return Json(new { leftoverCode = ListProvider.GenerateLeftover()} as dynamic);
+        }
+
+        public IActionResult LoadAvailable(string productId)
+        {
+            return Json(new {available = ListProvider.LoadAvailable(productId)});
+        }
 
         public async Task Firebase()
         {
-            var firebase = new FirebaseClient("https://invento-e28df.firebaseio.com/");
+            var firebase = new FirebaseClient(Url);
             //            var data = await firebase
             //                .Child("User")
             //                .OrderByKey()
