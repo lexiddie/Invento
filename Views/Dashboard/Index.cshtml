@@ -21,110 +21,56 @@
                 </button>
             </div>
         </div>
-        
-        <div class="page-visualization m-t-30">
-            <div>
-                <div>
-                    <img src="@Url.Content("~/assets/icon/speedometer.png")" alt="Measurement Logo"/>
-                    <label>Measurement</label>
-                </div>
-                <div>
-                    @* <label> @($"{JsonConvert.DeserializeObject<List<CampusCompletion>>(Model.Campuses).Count:n0}") Campuses</label> *@
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src="@Url.Content("~/assets/icon/supplier.png")" alt="Supplier Logo"/>
-                    <label>Supplier</label>
-                </div>
-                <div>
-                    @* <label>@($"{JsonConvert.DeserializeObject<List<BuildingCompletion>>(Model.Buildings).Count:n0}") Buildings</label> *@
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src="@Url.Content("~/assets/icon/category.png")" alt="Category Logo"/>
-                    <label>Category</label>
-                </div>
-                <div>
-                    @* <label>@($"{JsonConvert.DeserializeObject<List<RoomCompletion>>(Model.Rooms).Count:n0}") Rooms</label> *@
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src="@Url.Content("~/assets/icon/product.png")" alt="Product Logo"/>
-                    <label>Product</label>
-                </div>
-                <div>
-                    @* <label>@($"{JsonConvert.DeserializeObject<List<RoomCompletion>>(Model.Rooms).Count:n0}") Rooms</label> *@
-                </div>
-            </div>
-        </div>
-        
-        
-        <div class="page-visualization m-t-30">
-            <div>
-                <div>
-                    <img src="@Url.Content("~/assets/icon/purchase.png")" alt="Purchase Logo"/>
-                    <label>Purchase</label>
-                </div>
-                <div>
-                    @* <label> @($"{JsonConvert.DeserializeObject<List<CampusCompletion>>(Model.Campuses).Count:n0}") Campuses</label> *@
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src="@Url.Content("~/assets/icon/usage.png")" alt="Supplier Logo"/>
-                    <label>Supplier</label>
-                </div>
-                <div>
-                    @* <label>@($"{JsonConvert.DeserializeObject<List<BuildingCompletion>>(Model.Buildings).Count:n0}") Buildings</label> *@
-                </div>
-            </div>
-            <div>
-                <div>
-                    <img src="@Url.Content("~/assets/icon/leftover.png")" alt="Category Logo"/>
-                    <label>Leftover</label>
-                </div>
-                <div>
-                    @* <label>@($"{JsonConvert.DeserializeObject<List<RoomCompletion>>(Model.Rooms).Count:n0}") Rooms</label> *@
-                </div>
-            </div>
-        </div>  
-        
-        <div class="page-selection m-t-30">
-            <div>    
-                <img class="m-x-15" src="@Url.Content("~/assets/icon/visual.png")" alt="visualization Logo"/>
-                <label class="m-l-10 m-t-5">Visualization</label>
-            </div>    
-            <div>    
-                <label class="m-x-10">Semester</label>
-                <label for="semester"></label>
-                <select id="semester" class="main-select">
-                    <option selected="selected" disabled="disabled">Select Semester</option>
-                </select>
-                <label class="m-l-35 m-r-10">Session</label>
-                <label for="session"></label>
-                <select id="session" class="main-select">
-                    <option selected="selected" disabled="disabled">Select Session</option>
-                </select>
-                <button id="search-examination-course" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
-                    <img src="@Url.Content("~/assets/icon/search.png")" alt="Search Logo"/> 
-                    <span>Search</span>
-                </button>
-            </div>
-        </div>
-        
-        <div id="course-visualization">
-
-        </div>
-        <div id="dashboard-partial" >
-
-        </div>
+        <div id="dashboard-partial"></div>
+        <div id="visualization-partial"></div>
     </div>
     <script>
         $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const handleRefresh = $('#refresh-page');
+            const mainPartial = $('#dashboard-partial');
+            const secondPartial = $('#visualization-partial');
             
+            handleRefresh.click(function() {
+                reload.show();
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("Dashboard", "Dashboard")`,
+                    cache: true
+                }).done(function(res) {
+                    mainPartial.empty().append(res);
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log(c);
+                    handleErrorPage();
+                });
+            });  
+            
+            reload.show();
+            $.ajax({
+                type: 'GET',
+                url: `@Url.Action("Dashboard", "Dashboard")`,
+                cache: true
+            }).done(function(res) {
+                mainPartial.empty().append(res);
+                reload.hide();
+            }).fail(function(a, b, c) {
+                console.log(c);
+                handleErrorPage();
+            });
+            
+            
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
+            }
         });
     </script>
 </div>

@@ -121,7 +121,7 @@
                     url: `@Url.Action("List", "Product")`,
                     cache: true
                 }).done(function(res) { 
-                        mainPartial.empty().append(res);
+                    mainPartial.empty().append(res);
                     reload.hide();
                 }).fail(function(a, b, c) {
                     console.log('It is error');

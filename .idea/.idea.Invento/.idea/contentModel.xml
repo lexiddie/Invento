@@ -164,6 +164,8 @@
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Dashboard" t="Include">
+          <e p="_Dashboard.cshtml" t="Include" />
+          <e p="_Visualization.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>
         <e p="Explore" t="Include">
@@ -320,6 +322,7 @@
           <e p="firebase.js" t="Include" />
           <e p="main.js" t="Include" />
           <e p="site.js" t="Include" />
+          <e p="vanillaCalendar.js" t="Include" />
         </e>
         <e p="lib" t="Include">
           <e p="bootbox" t="Include">
