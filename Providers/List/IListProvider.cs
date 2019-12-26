@@ -1,3 +1,4 @@
+using System;
 using Invento.Models;
 using System.Collections.Generic;
 using Firebase.Database;
@@ -21,5 +22,7 @@ namespace Invento.Providers.List
         List<Leftover> LoadLeftovers();
         
         List<Inventory> LoadInventories();
+
+        Boolean CheckProduct(string name, string code);
     }
 }

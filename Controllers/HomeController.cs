@@ -81,6 +81,10 @@ namespace Invento.Controllers
             return Json(new { isSuccess = true} as dynamic);
         }
 
+        public IActionResult CheckProduct(string name, string code)
+        {
+            return Json(new { isValid = ListProvider.CheckProduct(name, code)} as dynamic);
+        }
 
         public IActionResult CurrentDateTime()
         {

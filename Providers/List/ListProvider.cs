@@ -197,6 +197,33 @@ namespace Invento.Providers.List
                 })
                 .ToList();
         }
+        
+        public List<Inventory> LoadInventories(string startDate, string toDate)
+        {
+            _products = ApiProvider.ApiProducts();
+            _measurements = ApiProvider.ApiMeasurements();
+            _purchases = ApiProvider.ApiPurchase();
+            _usages = ApiProvider.ApiUsage();
+            _leftovers = ApiProvider.ApiLeftover();
+            return _products.Result.Where(item => item.Object.IsActive)
+                .Select(i => new Inventory
+                {
+                    Code = i.Object.Code,
+                    Product = i.Object.Name,
+                    Measurement = LoadMeasurement(i.Object.MeasurementId),
+                    Quantity = LoadQuantity(i.Object.Id, startDate, toDate),
+                    Usage = LoadUsage(i.Object.Id, startDate, toDate),
+                    Leftover = LoadLeftover(i.Object.Id, startDate, toDate),
+                    Available = LoadQuantity(i.Object.Id, startDate, toDate) - (LoadUsage(i.Object.Id, startDate, toDate) + LoadLeftover(i.Object.Id, startDate, toDate))
+                })
+                .ToList();
+        }
+
+        public bool CheckProduct(string name, string code)
+        {
+            _products = ApiProvider.ApiProducts();
+            return _products.Result.Any(item => name.ToLower().TrimEnd() == item.Object.Name.ToLower().TrimEnd() || code.ToLower().TrimEnd() == item.Object.Code.ToLower().TrimEnd());
+        }
 
         public int MeasurementQuantity()
         {
@@ -337,14 +364,54 @@ namespace Invento.Providers.List
             return _purchases.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId).Sum(item => item.Object.Quantity) ?? 0;
         }
 
+        public int LoadQuantity(string productId, string startDate, string toDate)
+        {
+            return _purchases.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId && ValidDate(item.Object.CreatedAt, startDate, toDate)).Sum(item => item.Object.Quantity) ?? 0;
+        }
+
+        private bool ValidDate(string dataDate, string startDate, string toDate)
+        {
+            var first = startDate.Split("/");
+            var second = toDate.Split("/");
+            var data = dataDate.Split(" ")[0].Split("/");
+            Console.WriteLine(dataDate.Split(" ")[0]);
+            return Convert.ToInt64(data[2]) == Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) == Convert.ToInt64(second[2]) && Convert.ToInt64(data[1]) == Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) == Convert.ToInt64(second[1]) && Convert.ToInt64(data[0]) == Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) == Convert.ToInt64(second[0]) || Convert.ToInt64(data[2]) > Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) < Convert.ToInt64(second[2]) || Convert.ToInt64(data[1]) > Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) < Convert.ToInt64(second[1]) || Convert.ToInt64(data[0]) > Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) < Convert.ToInt64(second[0]); 
+//            else if (Convert.ToInt64(data[2]) > Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) < Convert.ToInt64(second[2]))
+//            {
+//                return true;
+//            } 
+//            else if (Convert.ToInt64(data[1]) > Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) < Convert.ToInt64(second[1]))
+//            {
+//                return true;
+//            }
+//            else if (Convert.ToInt64(data[0]) > Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) < Convert.ToInt64(second[0]))
+//            {
+//                return true;
+//            }
+//            else
+//            {
+//                return false;
+//            }
+        }
+
         private int LoadUsage(string productId)
         {
             return _usages.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId).Sum(item => item.Object.Quantity) ?? 0;
         }
         
+        private int LoadUsage(string productId, string startDate, string toDate)
+        {
+            return _usages.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId && ValidDate(item.Object.CreatedAt, startDate, toDate)).Sum(item => item.Object.Quantity) ?? 0;
+        }
+        
         private int LoadLeftover(string productId)
         {
             return _leftovers.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId).Sum(item => item.Object.Quantity) ?? 0;
+        }
+        
+        private int LoadLeftover(string productId, string startDate, string toDate)
+        {
+            return _leftovers.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId && ValidDate(item.Object.CreatedAt, startDate, toDate)).Sum(item => item.Object.Quantity) ?? 0;
         }
 
 //        public List<Measurement> LoadMeasurements()
