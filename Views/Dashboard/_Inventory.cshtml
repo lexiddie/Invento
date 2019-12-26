@@ -1,0 +1,66 @@
+@model Invento.ViewModels.InventoryViewModel
+@using Newtonsoft.Json
+@{
+    Layout = null;
+    var i = 0;
+}
+
+<div>
+    <section class="page-table m-t-30">
+        <div class="col-md-12 col-lg-12">
+            <div class="block block--underline">
+                <div class="block__body text-left height-3">
+                    <div class="table-responsive">
+                        <table id="table-auto" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="mn-w-40px w-40px"><img class="w-15px h-15px" src="~/assets/icon/sort.png" alt="Sort Logo"/></th>
+                                <th class="mn-w-150px w-150px">Code</th>
+                                <th class="mn-w-200px w-200px">Product</th>
+                                <th class="mn-w-200px w-200px">Unit of Measurement</th>
+                                <th class="mn-w-150px w-150px">Quantity</th>
+                                <th class="mn-w-150px w-150px">Usage</th>
+                                <th class="mn-w-150px w-150px">Leftover</th>
+                                <th class="mn-w-150px w-150px">Available</th>
+                            </tr>
+                            </thead>
+                            <tbody>        
+                            @foreach (var item in JsonConvert.DeserializeObject<List<Inventory>>(Model.Inventories))
+                            {
+                                i++;
+                                <tr>
+                                    <td>@i.ToString()</td>
+                                    <td>@item.Code</td>
+                                    <td>@item.Product</td>
+                                    <td>@item.Measurement</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Usage</td>
+                                    <td>@item.Leftover</td>
+                                    <td>@item.Available</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                const handleTable = $('#table-auto');
+                
+                handleTable.DataTable({
+                "columnDefs": [{
+                    "targets": "no-sort",
+                    "orderable": false
+                    }]
+                });
+
+            }); 
+        </script>
+    </section>
+</div>
+
+
+
+   

@@ -101,7 +101,7 @@
             @* <select id="session" class="main-select"> *@
             @*     <option selected="selected" disabled="disabled">Select Session</option> *@
             @* </select> *@
-            <button id="search-examination-course" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
+            <button id="search-inventories" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
                 <img src="@Url.Content("~/assets/icon/search.png")" alt="Search Logo"/> 
                 <span>Search</span>
             </button>
@@ -109,13 +109,50 @@
     </div>
     <script>
         $(document).ready(function() {
-            const handleFirstCalendar = $('#first-calendar');
-            const handleSecondCalendar = $('#second-calendar');
+            const firstCalendar = $('#first-calendar');
+            const secondCalendar = $('#second-calendar');
+            const handleSearch = $('#search-inventories');
+            firstCalendar.datepicker();
+            secondCalendar.datepicker();
             
-            handleFirstCalendar.click(function() {
+            firstCalendar.click(function() {
                 console.log('This is my bitch');
-                $(this).datepicker();
+                firstCalendar.datepicker();
             });
+            
+            secondCalendar.click(function() {
+                console.log('This is my bitch');
+                secondCalendar.datepicker();
+            });
+            
+            handleSearch.click(function() {
+                console.log(firstCalendar.val());
+                console.log(secondCalendar.val());
+                if (checkValidDate()) {
+                    bootbox.alert("This is valid");
+                } else {
+                    bootbox.alert("Invalid selected date! Start Date must be before the To Date").find('.modal-content').css({
+                       'margin-top': function (){
+                           const w = $( window ).height();
+                           const b = $(".modal-dialog").height();
+                           const h = (w - b) / 2;
+                           return h + "px";
+                       }
+                    });
+                }
+            });
+            
+            function checkValidDate() {
+                const first = firstCalendar.val().split("/");
+                const second = secondCalendar.val().split("/");
+                const firstDay = first[0];
+                const secondDay = second[0];
+                const firstMonth = first[1];
+                const secondMonth = second[1];
+                const firstYear = first[2];
+                const secondYear = second[2];
+                return (firstDay === secondDay && firstMonth === secondMonth && firstYear === secondYear) || firstYear < secondYear || firstMonth < secondMonth || firstDay < secondDay;
+            }
         });
     </script>
 </div>

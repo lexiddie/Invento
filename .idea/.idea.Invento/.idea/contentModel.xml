@@ -56,10 +56,6 @@
         <e p="Supplier.cs" t="Include" />
         <e p="Usage.cs" t="Include" />
       </e>
-      <e p="n" t="Include">
-        <e p="404.html" t="Include" />
-        <e p="index.html" t="Include" />
-      </e>
       <e p="obj" t="ExcludeRecursive">
         <e p="Debug" t="Include">
           <e p="netcoreapp2.2" t="Include">
@@ -147,6 +143,7 @@
         <e p="CategoryViewModel.cs" t="Include" />
         <e p="DashboardViewModel.cs" t="Include" />
         <e p="ExploreViewModel.cs" t="Include" />
+        <e p="InventoryViewModel.cs" t="Include" />
         <e p="LeftoverViewModel.cs" t="Include" />
         <e p="MeasurementViewModel.cs" t="Include" />
         <e p="ProductViewModel.cs" t="Include" />
@@ -165,6 +162,7 @@
         </e>
         <e p="Dashboard" t="Include">
           <e p="_Dashboard.cshtml" t="Include" />
+          <e p="_Inventory.cshtml" t="Include" />
           <e p="_Visualization.cshtml" t="Include" />
           <e p="Index.cshtml" t="Include" />
         </e>

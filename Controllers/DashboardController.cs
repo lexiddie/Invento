@@ -1,10 +1,14 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using Invento.Helpers;
+using Invento.Models;
 using Invento.Providers.List;
 using Invento.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace Invento.Controllers
 {
@@ -44,6 +48,16 @@ namespace Invento.Controllers
         public IActionResult Visualization()
         {
             return PartialView("_Visualization");
+        }
+        
+        public IActionResult Inventories(InventoryViewModel model)
+        {
+            var viewModel = new InventoryViewModel();
+//            viewModel.StartDate = model.StartDate;
+//            viewModel.ToDate = model.ToDate;
+//            var temp = JsonConvert.DeserializeObject<List<Inventory>>(model.Inventories); 
+//            temp = temp.Where(item => item)
+            return PartialView("_Inventory", viewModel);
         }
     }
 }

@@ -331,7 +331,7 @@ namespace Invento.Providers.List
             var total = _purchases.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId).Sum(item => item.Object.Quantity) ?? 0;
             return total - (LoadUsage(productId) + LoadLeftover(productId));
         }
-
+        
         private int LoadQuantity(string productId)
         {
             return _purchases.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId).Sum(item => item.Object.Quantity) ?? 0;
