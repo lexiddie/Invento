@@ -85,7 +85,7 @@
                 categorySelect.empty();
                 categorySelect.append('<option selected=selected disabled=disabled>Select Category</option>');         
                 $.each(res, function(index, data) {
-                    console.log(data);
+                    // console.log(data);
                     categorySelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
                 });
                 reload.hide();
@@ -95,13 +95,12 @@
                 measurementSelect.empty();
                 measurementSelect.append('<option selected=selected disabled=disabled>Select Measurement</option>');         
                 $.each(res, function(index, data) {
-                    console.log(data);
+                    // console.log(data);
                     measurementSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
                 });
                 reload.hide();
             });
             
-            check();
             $('#back-to-index').click(function() {
                 back();
             });
@@ -130,36 +129,57 @@
             }
             
             function save() {
-                $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
-                    const userKey = database.ref().child('products').push().key;
-                    const data = {Id: userKey, CategoryId: categorySelect.val(), MeasurementId: measurementSelect.val(), Name: textFieldName.val().trimEnd(), Code: textFieldCode.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
-                    database.ref().child('products').child(userKey).set(data);
-                    back();
-                }).fail(function(a, b, c) {
-                    console.log('It is error');
-                    console.log(c);
-                });
-            }
-            
-            function check() {
-                const data = database.ref().child('measurements');
+                const data = database.ref().child('products');
                 data.on('value', function(snapshot) {
-                    // for(let i = 0; i < snapshot.children(); i++) {
-                    //     console.log(snapshot[i]['value']);
+                    // console.log(snapshot.numChildren());
+                    // for(let i = 0; i < snapshot.numChildren(); i++) {
+                    //     console.log(snapshot.val());
                     // } 
-                    let check = false;
+                    
+                    // for (let i in snapshot.val()) {
+                    //     console.log(i.val());
+                    //     console.log(i.key);
+                    // }
+                    let count = 0;
+                    let allowLoop = true;
                     snapshot.forEach((child) => {
-                        // console.log(child.key, child.val());
-                        // console.log(child.val()['Name']);
-                        if (child.val()['Name'].toLowerCase() === 'kilogram') {
-                            check = true;
+                        count += 1;
+                        if (child.val()['Name'].toLowerCase().trimEnd() === textFieldName.val().toLowerCase().trimEnd() && allowLoop) {
+                            bootbox.alert("Product's Name already exists, please input another name!!").find('.modal-content').css({
+                               'margin-top': function (){
+                                   const w = $( window ).height();
+                                   const b = $(".modal-dialog").height();
+                                   const h = (w - b) / 2;
+                                   return h + "px";
+                               }
+                            });
+                            return false;
+                        } else if (child.val()['Code'].toLowerCase().trimEnd() ===  textFieldCode.val().toLowerCase().trimEnd() && allowLoop) {
+                            bootbox.alert("Product's Code already exists, please input another code!!").find('.modal-content').css({
+                               'margin-top': function (){
+                                   const w = $( window ).height();
+                                   const b = $(".modal-dialog").height();
+                                   const h = (w - b) / 2;
+                                   return h + "px";
+                               }
+                            });
+                            return false;
+                        } else if (count === snapshot.numChildren()) {
+                            $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
+                                allowLoop = false;
+                                const userKey = database.ref().child('products').push().key;
+                                const data = {Id: userKey, CategoryId: categorySelect.val(), MeasurementId: measurementSelect.val(), Name: textFieldName.val().trimEnd(), Code: textFieldCode.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                                database.ref().child('products').child(userKey).set(data);
+                                back();
+                                return false;
+                            }).fail(function(a, b, c) {
+                                console.log('It is error');
+                                console.log(c);
+                            });
                         }
                     });
-                    console.log(check);
-                })
-                
+                });
             }
-            
             
         });
     </script>
