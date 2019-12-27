@@ -31,7 +31,7 @@ namespace Invento.Providers.API
                     data = new List<FirebaseObject<MeasurementDto>>();
                 }
             });
-//            data = (List<FirebaseObject<MeasurementDto>>) await Firebase.Child("measurements").OrderByKey().OnceAsync<MeasurementDto>();
+            //            data = (List<FirebaseObject<MeasurementDto>>) await Firebase.Child("measurements").OrderByKey().OnceAsync<MeasurementDto>();
             return data;
         }
 
@@ -145,11 +145,11 @@ namespace Invento.Providers.API
                 Name = name,
                 Description = description,
                 IsActive = status,
-                CreatedAt = DateTime.Now.ToString(CultureInfo.InvariantCulture),
+                CreatedAt = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss"),
                 CreatedBy = "Admin"
             };
             await Firebase.Child("measurements").Child(id).PutAsync(measurement);
-            return JsonConvert.SerializeObject(new { isSuccess = true} as dynamic);
+            return JsonConvert.SerializeObject(new { isSuccess = true } as dynamic);
         }
     }
 }

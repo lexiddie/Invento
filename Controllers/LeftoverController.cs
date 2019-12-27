@@ -10,22 +10,23 @@ namespace Invento.Controllers
 {
     [Route("Leftover")]
     public class LeftoverController : Controller
-    {        
+    {
         private static readonly ListProvider ListProvider = new ListProvider();
-        
+
         [HttpGet]
         [Route("Index")]
         public IActionResult Index()
         {
             return PartialView("Index");
         }
-        
+
         [HttpGet]
         [Route("List")]
         public IActionResult List()
         {
-            var dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-            var viewModel = new LeftoverViewModel{
+            var dateTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            var viewModel = new LeftoverViewModel
+            {
                 UpdatedDateTime = $"{ReadDateTime.ReadDate(dateTime)} {ReadDateTime.ReadTime(dateTime)}",
                 Leftovers = JsonConvert.SerializeObject(ListProvider.LoadLeftovers())
             };

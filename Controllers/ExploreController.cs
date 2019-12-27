@@ -23,7 +23,7 @@ namespace Invento.Controllers
         [Route("List")]
         public IActionResult List()
         {
-            var dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+            var dateTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             var viewModel = new ExploreViewModel{
                 UpdatedDateTime = $"{ReadDateTime.ReadDate(dateTime)} {ReadDateTime.ReadTime(dateTime)}",
                 Inventories = JsonConvert.SerializeObject(ListProvider.LoadInventories())

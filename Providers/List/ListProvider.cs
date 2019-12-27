@@ -369,29 +369,29 @@ namespace Invento.Providers.List
             return _purchases.Result?.Where(item => !item.Object.IsVoid && item.Object.ProductId == productId && ValidDate(item.Object.CreatedAt, startDate, toDate)).Sum(item => item.Object.Quantity) ?? 0;
         }
 
-        private bool ValidDate(string dataDate, string startDate, string toDate)
+        private static bool ValidDate(string dataDate, string startDate, string toDate)
         {
-            var first = startDate.Split("/");
-            var second = toDate.Split("/");
-            var data = dataDate.Split(" ")[0].Split("/");
-            Console.WriteLine(dataDate.Split(" ")[0]);
-            return Convert.ToInt64(data[2]) == Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) == Convert.ToInt64(second[2]) && Convert.ToInt64(data[1]) == Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) == Convert.ToInt64(second[1]) && Convert.ToInt64(data[0]) == Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) == Convert.ToInt64(second[0]) || Convert.ToInt64(data[2]) > Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) < Convert.ToInt64(second[2]) || Convert.ToInt64(data[1]) > Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) < Convert.ToInt64(second[1]) || Convert.ToInt64(data[0]) > Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) < Convert.ToInt64(second[0]); 
-//            else if (Convert.ToInt64(data[2]) > Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) < Convert.ToInt64(second[2]))
-//            {
-//                return true;
-//            } 
-//            else if (Convert.ToInt64(data[1]) > Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) < Convert.ToInt64(second[1]))
-//            {
-//                return true;
-//            }
-//            else if (Convert.ToInt64(data[0]) > Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) < Convert.ToInt64(second[0]))
-//            {
-//                return true;
-//            }
-//            else
-//            {
-//                return false;
-//            }
+//            var first = startDate.Split("/");
+//            var second = toDate.Split("/");
+//            var data = dataDate.Split(" ")[0].Split("/");
+//            Console.WriteLine(dataDate.Split(" ")[0]);
+            var oDate = DateTime.ParseExact(dataDate.Split(" ")[0], "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            var oFirst = DateTime.ParseExact(startDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            var oSecond = DateTime.ParseExact(toDate, "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+
+            var firsCompare = DateTime.Compare(oFirst, oDate);
+            Console.WriteLine($"Compare {oFirst} and {oDate} is {firsCompare}");
+            var secondCompare = DateTime.Compare(oDate, oSecond);
+            Console.WriteLine($"Compare {oDate} and {oSecond} is {secondCompare}");
+            Console.WriteLine("\n");
+            return (firsCompare == 0 || firsCompare < 0) && (secondCompare == 0 || secondCompare < 0);
+
+            //            return Convert.ToInt64(data[2]) == Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) == Convert.ToInt64(second[2]) && Convert.ToInt64(data[1]) == Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) == Convert.ToInt64(second[1]) && Convert.ToInt64(data[0]) == Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) == Convert.ToInt64(second[0]) 
+//                   || Convert.ToInt64(data[2]) >= Convert.ToInt64(first[2]) && Convert.ToInt64(data[2]) <= Convert.ToInt64(second[2]) && Convert.ToInt64(data[1]) >= Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) <= Convert.ToInt64(second[1]) && Convert.ToInt64(data[0]) >= Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) <= Convert.ToInt64(second[0])
+//                   || Convert.ToInt64(data[1]) >= Convert.ToInt64(first[1]) && Convert.ToInt64(data[1]) <= Convert.ToInt64(second[1]) && Convert.ToInt64(data[0]) >= Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) <= Convert.ToInt64(second[0]) 
+//                   || Convert.ToInt64(data[0]) >= Convert.ToInt64(first[0]) && Convert.ToInt64(data[0]) <= Convert.ToInt64(second[0]);
+//            return true;
+
         }
 
         private int LoadUsage(string productId)

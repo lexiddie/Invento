@@ -12,20 +12,21 @@ namespace Invento.Controllers
     public class UsageController : Controller
     {
         private static readonly ListProvider ListProvider = new ListProvider();
-        
+
         [HttpGet]
         [Route("Index")]
         public IActionResult Index()
         {
             return PartialView("Index");
         }
-        
+
         [HttpGet]
         [Route("List")]
         public IActionResult List()
         {
-            var dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-            var viewModel = new UsageViewModel{
+            var dateTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            var viewModel = new UsageViewModel
+            {
                 UpdatedDateTime = $"{ReadDateTime.ReadDate(dateTime)} {ReadDateTime.ReadTime(dateTime)}",
                 Usages = JsonConvert.SerializeObject(ListProvider.LoadUsages())
             };

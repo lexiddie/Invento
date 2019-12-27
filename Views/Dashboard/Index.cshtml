@@ -22,14 +22,14 @@
             </div>
         </div>
         <div id="dashboard-partial"></div>
-        <div id="visualization-partial"></div>
+        <div id="inventory-partial"></div>
     </div>
     <script>
         $(document).ready(function() {
             const reload = $('div[id$=main-reloading]');
             const handleRefresh = $('#refresh-page');
             const mainPartial = $('#dashboard-partial');
-            const secondPartial = $('#visualization-partial');
+            const secondPartial = $('#inventory-partial');
             
             handleRefresh.click(function() {
                 reload.show();

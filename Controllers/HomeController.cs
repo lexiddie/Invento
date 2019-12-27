@@ -18,7 +18,7 @@ namespace Invento.Controllers
     public class HomeController : Controller
     {
         private new const string Url = "https://invento-e28df.firebaseio.com/";
-        
+
         private static readonly ApiProvider ApiProvider = new ApiProvider();
         private static readonly ListProvider ListProvider = new ListProvider();
 
@@ -35,8 +35,8 @@ namespace Invento.Controllers
         }
         public IActionResult Index()
         {
-//            Console.WriteLine(ApiProvider.ApiCreateMeasurement("-LuQjw-lLKluye7vLkTb", "Kilogram", "Kg", "This is kg", true));
-//            Console.WriteLine(ApiProvider.ApiMeasurements().Count);
+            //            Console.WriteLine(ApiProvider.ApiCreateMeasurement("-LuQjw-lLKluye7vLkTb", "Kilogram", "Kg", "This is kg", true));
+            //            Console.WriteLine(ApiProvider.ApiMeasurements().Count);
             Console.WriteLine("Check Return");
             return View();
         }
@@ -78,17 +78,25 @@ namespace Invento.Controllers
         public IActionResult Logout()
         {
             _cache.Set("isLogin", false, _entryOptions);
-            return Json(new { isSuccess = true} as dynamic);
+            return Json(new { isSuccess = true } as dynamic);
         }
 
         public IActionResult CheckProduct(string name, string code)
         {
-            return Json(new { isValid = ListProvider.CheckProduct(name, code)} as dynamic);
+            return Json(new { isValid = ListProvider.CheckProduct(name, code) } as dynamic);
+        }
+
+        public IActionResult CheckValidDate(string startDate, string toDate)
+        {
+            var oFirst = DateTime.ParseExact(startDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var oSecond = DateTime.ParseExact(toDate, "dd/MM/yyyy", CultureInfo.InvariantCulture);
+            var compare = DateTime.Compare(oFirst, oSecond);
+            return Json(new { isValid = compare == 0 || compare < 0 } as dynamic);
         }
 
         public IActionResult CurrentDateTime()
         {
-            return Json(new { dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture)} as dynamic );
+            return Json(new { dateTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss") } as dynamic);
         }
 
         public IActionResult CreateMeasurement(string id, string name, string abbreviation, string description, bool status)
@@ -100,12 +108,12 @@ namespace Invento.Controllers
         {
             return Json(ListProvider.LoadCategories());
         }
-        
+
         public IActionResult CompletionMeasurements()
         {
             return Json(ListProvider.LoadMeasurements());
         }
-        
+
         public IActionResult CompletionProducts()
         {
             return Json(ListProvider.LoadProducts());
@@ -124,22 +132,22 @@ namespace Invento.Controllers
 
         public IActionResult GeneratePurchase()
         {
-            return Json(new { purchaseCode = ListProvider.GeneratePurchase()} as dynamic);
+            return Json(new { purchaseCode = ListProvider.GeneratePurchase() } as dynamic);
         }
-        
+
         public IActionResult GenerateUsage()
         {
-            return Json(new { usageCode = ListProvider.GenerateUsage()} as dynamic);
+            return Json(new { usageCode = ListProvider.GenerateUsage() } as dynamic);
         }
-        
+
         public IActionResult GenerateLeftover()
         {
-            return Json(new { leftoverCode = ListProvider.GenerateLeftover()} as dynamic);
+            return Json(new { leftoverCode = ListProvider.GenerateLeftover() } as dynamic);
         }
 
         public IActionResult LoadAvailable(string productId)
         {
-            return Json(new {available = ListProvider.LoadAvailable(productId)});
+            return Json(new { available = ListProvider.LoadAvailable(productId) });
         }
 
         public async Task Firebase()

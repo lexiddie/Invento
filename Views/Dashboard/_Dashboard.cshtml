@@ -109,11 +109,13 @@
     </div>
     <script>
         $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
             const firstCalendar = $('#first-calendar');
             const secondCalendar = $('#second-calendar');
             const handleSearch = $('#search-inventories');
-            firstCalendar.datepicker();
-            secondCalendar.datepicker();
+            const secondPartial = $('#inventory-partial');
+            firstCalendar.datepicker({ dateFormat: 'dd/mm/yy' });
+            secondCalendar.datepicker({ dateFormat: 'dd/mm/yy' });
             
             firstCalendar.click(function() {
                 console.log('This is my bitch');
@@ -128,30 +130,52 @@
             handleSearch.click(function() {
                 console.log(firstCalendar.val());
                 console.log(secondCalendar.val());
-                if (checkValidDate()) {
-                    bootbox.alert("This is valid");
-                } else {
-                    bootbox.alert("Invalid selected date! Start Date must be before the To Date").find('.modal-content').css({
-                       'margin-top': function (){
-                           const w = $( window ).height();
-                           const b = $(".modal-dialog").height();
-                           const h = (w - b) / 2;
-                           return h + "px";
-                       }
-                    });
-                }
+                $.ajax({
+                    type: 'POST',
+                    url: `@Url.Action("CheckValidDate", "Home")?startDate=${firstCalendar.val()}&toDate=${secondCalendar.val()}`,
+                    cache: true,
+                }).done(function(res) {
+                    if (res['isValid']) {
+                        reload.show();
+                        $.ajax({
+                            type: 'POST',
+                            url: `@Url.Action("Inventories", "Dashboard")?startDate=${firstCalendar.val()}&toDate=${secondCalendar.val()}`,
+                            cache: true,
+                        }).done(function(res) {
+                            secondPartial.empty().append(res);
+                            reload.hide();
+                        }).fail(function(a, b, c) {
+                            console.log('It is error');
+                            console.log(c);
+                            handleErrorPage();
+                        })
+                    } else {
+                       bootbox.alert("Invalid selected date! Start Date must be before the To Date").find('.modal-content').css({
+                          'margin-top': function (){
+                              const w = $( window ).height();
+                              const b = $(".modal-dialog").height();
+                              const h = (w - b) / 2;
+                              return h + "px";
+                          }
+                       }); 
+                    }
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                    handleErrorPage();
+                });
             });
             
-            function checkValidDate() {
-                const first = firstCalendar.val().split("/");
-                const second = secondCalendar.val().split("/");
-                const firstDay = first[0];
-                const secondDay = second[0];
-                const firstMonth = first[1];
-                const secondMonth = second[1];
-                const firstYear = first[2];
-                const secondYear = second[2];
-                return (firstDay === secondDay && firstMonth === secondMonth && firstYear === secondYear) || firstYear < secondYear || firstMonth < secondMonth || firstDay < secondDay;
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
             }
         });
     </script>

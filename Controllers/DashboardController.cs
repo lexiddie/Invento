@@ -28,7 +28,7 @@ namespace Invento.Controllers
         [Route("Dashboard")]
         public IActionResult Dashboard()
         {
-            var dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
+            var dateTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
             var viewModel = new DashboardViewModel
             {
                 UpdatedDateTime = $"{ReadDateTime.ReadDate(dateTime)} {ReadDateTime.ReadTime(dateTime)}",
@@ -42,21 +42,24 @@ namespace Invento.Controllers
             };
             return PartialView("_Dashboard", viewModel);
         }
-        
+
         [HttpGet]
         [Route("Visualization")]
         public IActionResult Visualization()
         {
             return PartialView("_Visualization");
         }
-        
-        public IActionResult Inventories(InventoryViewModel model)
+
+        [HttpPost]
+        [Route("Inventories")]
+        public IActionResult Inventories(string startDate, string toDate)
         {
-            var viewModel = new InventoryViewModel();
-//            viewModel.StartDate = model.StartDate;
-//            viewModel.ToDate = model.ToDate;
-//            var temp = JsonConvert.DeserializeObject<List<Inventory>>(model.Inventories); 
-//            temp = temp.Where(item => item)
+            var viewModel = new InventoryViewModel
+            {
+                StartDate = startDate,
+                ToDate = toDate,
+                Inventories = JsonConvert.SerializeObject(ListProvider.LoadInventories(startDate, toDate))
+            };
             return PartialView("_Inventory", viewModel);
         }
     }

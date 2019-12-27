@@ -12,26 +12,27 @@ namespace Invento.Controllers
     public class SupplierController : Controller
     {
         private static readonly ListProvider ListProvider = new ListProvider();
-        
+
         [HttpGet]
         [Route("Index")]
         public IActionResult Index()
         {
             return PartialView("Index");
         }
-        
+
         [HttpGet]
         [Route("List")]
         public IActionResult List()
         {
-            var dateTime = DateTime.Now.ToString(CultureInfo.InvariantCulture);
-            var viewModel = new SupplierViewModel{
+            var dateTime = DateTime.Now.ToString("dd/MM/yyyy HH:mm:ss");
+            var viewModel = new SupplierViewModel
+            {
                 UpdatedDateTime = $"{ReadDateTime.ReadDate(dateTime)} {ReadDateTime.ReadTime(dateTime)}",
                 Suppliers = JsonConvert.SerializeObject(ListProvider.LoadSuppliers())
             };
             return PartialView("_Supplier", viewModel);
         }
-        
+
         [HttpGet]
         [Route("Create")]
         public IActionResult Create()
@@ -45,7 +46,7 @@ namespace Invento.Controllers
         {
             return PartialView("_EditModal");
         }
-        
+
         [HttpPost]
         [Route("Delete")]
         public IActionResult Delete(string Id)
