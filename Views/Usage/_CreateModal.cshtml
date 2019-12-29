@@ -133,38 +133,30 @@
             }
             
             function save() {
-                $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
-                    const userKey = database.ref().child('usages').push().key;
-                    const data = {Id: userKey, Code: usageCode, ProductId: productSelect.val(), Quantity: textFieldQuantity.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsVoid: false, CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
-                    console.log(data);
-                    database.ref().child('usages').child(userKey).set(data);
-                    back();
-                }).fail(function(a, b, c) {
-                    console.log('It is error');
-                    console.log(c);
-                });
+                if  ((textFieldAvailable.val().split(" ")[0]) >= textFieldQuantity.val() && textFieldQuantity.val() > 0) {
+                    $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
+                        const userKey = database.ref().child('usages').push().key;
+                        const data = {Id: userKey, Code: usageCode, ProductId: productSelect.val(), Quantity: textFieldQuantity.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsVoid: false, CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                        console.log(data);
+                        database.ref().child('usages').child(userKey).set(data);
+                        back();
+                    }).fail(function(a, b, c) {
+                        console.log('It is error');
+                        console.log(c);
+                    });
+                } else {
+                   bootbox.alert("Invalid Quantity input! please input again").find('.modal-content').css({
+                      'margin-top': function (){
+                          const w = $( window ).height();
+                          const b = $(".modal-dialog").height();
+                          const h = (w - b) / 2;
+                          return h + "px";
+                      }
+                   }); 
+                }
             }
             
 
-            
-            function check() {
-                const data = database.ref().child('measurements');
-                data.on('value', function(snapshot) {
-                    // for(let i = 0; i < snapshot.children(); i++) {
-                    //     console.log(snapshot[i]['value']);
-                    // } 
-                    let check = false;
-                    snapshot.forEach((child) => {
-                        // console.log(child.key, child.val());
-                        // console.log(child.val()['Name']);
-                        if (child.val()['Name'].toLowerCase() === 'kilogram') {
-                            check = true;
-                        }
-                    });
-                    console.log(check);
-                })
-                
-            }
             
             
         });

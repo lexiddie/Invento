@@ -14,7 +14,9 @@ namespace Invento.Providers.List
 {
     public class ListProvider: IListProvider
     {
-        private const string Url = "https://invento-e28df.firebaseio.com/";
+//        private const string Url = "https://invento-e28df.firebaseio.com/";
+        
+        private static readonly FirebaseClient Firebase = new FirebaseClient("https://invento-e28df.firebaseio.com/");
         
         private static readonly ApiProvider ApiProvider = new ApiProvider();
         
@@ -223,6 +225,73 @@ namespace Invento.Providers.List
         {
             _products = ApiProvider.ApiProducts();
             return _products.Result.Any(item => name.ToLower().TrimEnd() == item.Object.Name.ToLower().TrimEnd() || code.ToLower().TrimEnd() == item.Object.Code.ToLower().TrimEnd());
+        }
+
+        public bool VoidPurchase(string id)
+        {
+            _purchases = ApiProvider.ApiPurchase();
+            foreach (var item in _purchases.Result)
+            {
+                if (item.Object.Id != id) continue;
+                var purchase = new PurchaseDto
+                {
+                    Id = item.Object.Id,
+                    Code = item.Object.Code,
+                    Price = item.Object.Price,
+                    Quantity = item.Object.Quantity,
+                    IsVoid = true,
+                    ProductId = item.Object.ProductId,
+                    SupplierId = item.Object.SupplierId,
+                    CreatedAt = item.Object.CreatedAt,
+                    CreatedBy = item.Object.CreatedBy
+                };
+                Firebase.Child("purchases").Child(item.Object.Id).PutAsync(purchase);
+            }
+            return true;
+        }
+
+        public bool VoidUsage(string id)
+        {
+            _usages = ApiProvider.ApiUsage();
+            foreach (var item in _usages.Result)
+            {
+                if (item.Object.Id != id) continue;
+                var usage = new UsageDto
+                {
+                    Id = item.Object.Id,
+                    Code = item.Object.Code,
+                    Quantity = item.Object.Quantity,
+                    IsVoid = true,
+                    Description = item.Object.Description,
+                    ProductId = item.Object.ProductId,
+                    CreatedAt = item.Object.CreatedAt,
+                    CreatedBy = item.Object.CreatedBy
+                };
+                Firebase.Child("usages").Child(item.Object.Id).PutAsync(usage);
+            }
+            return true;
+        }
+
+        public bool VoidLeftover(string id)
+        {
+            _leftovers = ApiProvider.ApiLeftover();
+            foreach (var item in _leftovers.Result)
+            {
+                if (item.Object.Id != id) continue;
+                var leftover = new LeftoverDto
+                {
+                    Id = item.Object.Id,
+                    Code = item.Object.Code,
+                    Quantity = item.Object.Quantity,
+                    IsVoid = true,
+                    Description = item.Object.Description,
+                    ProductId = item.Object.ProductId,
+                    CreatedAt = item.Object.CreatedAt,
+                    CreatedBy = item.Object.CreatedBy
+                };
+                Firebase.Child("leftovers").Child(item.Object.Id).PutAsync(leftover);
+            }
+            return true;
         }
 
         public int MeasurementQuantity()

@@ -66,10 +66,10 @@
         <div>
             <div>
                 <img src="@Url.Content("~/assets/icon/usage.png")" alt="Supplier Logo"/>
-                <label>Supplier</label>
+                <label>Usage</label>
             </div>
             <div>
-                <label>@Model.Supplier</label>
+                <label>@Model.Usage</label>
             </div>
         </div>
         <div>
@@ -86,18 +86,18 @@
     <div class="page-selection m-t-30">
         <div>    
             <img class="m-x-15" src="@Url.Content("~/assets/icon/visual.png")" alt="visualization Logo"/>
-            <label class="m-l-10 m-t-5">Visualization</label>
+            <label class="m-l-10 m-t-5">Visualization</label>`
         </div>    
         <div>    
             <label class="m-x-10">Start Date</label>
             <label for="first-calendar"></label>
-            <input id="first-calendar" type="text" readonly="readonly" class="main-textfield"/>
+            <input id="first-calendar" type="text" value="@Model.UpdatedDateTime.Split(" ")[0]" readonly="readonly" class="main-textfield"/>
             @* <select id="semester" class="main-select"> *@
             @*     <option selected="selected" disabled="disabled">Select Semester</option> *@
             @* </select> *@
             <label class="m-l-35 m-r-10">To Date</label>
             <label for="second-calendar"></label>
-            <input id="second-calendar" type="text" readonly="readonly" class="main-textfield"/>
+            <input id="second-calendar" type="text" value="@Model.UpdatedDateTime.Split(" ")[0]" readonly="readonly" class="main-textfield"/>
             @* <select id="session" class="main-select"> *@
             @*     <option selected="selected" disabled="disabled">Select Session</option> *@
             @* </select> *@

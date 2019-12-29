@@ -52,7 +52,7 @@
                                     <td>@item.Quantity</td>
                                     <td>@item.Price</td>
                                     <td class="display-flex">
-                                        <a asp-controller="Product" asp-action="Delete" asp-route-Id="@item.Id"  class="btn-image btn-image-danger w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/trash.png")" alt="Delete Logo"/></a>
+                                        <a asp-controller="Purchase" asp-action="Delete" asp-route-Id="@item.Id"  class="btn-image btn-image-danger w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/trash.png")" alt="Delete Logo"/></a>
                                     </td>
                                     <td>
                                         @{
@@ -122,10 +122,29 @@
                 function handleDelete(url) {
                     bootbox.confirm('Are you sure you want to void this purchase?', function(res){
                         if (res) {
-                            $.post(url).done(function(res) {
-                                $('div[id$=main-reloading]').hide();
-                                
-                            });
+                            reload.show();
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                cache: true,
+                            }).done(function(res) {
+                                reload.show();
+                                $.ajax({
+                                    type: 'GET',
+                                    url: `@Url.Action("List", "Purchase")`,
+                                    cache: true
+                                }).done(function(res) {
+                                    mainPartial.empty().append(res);
+                                    reload.hide();
+                                }).fail(function(a, b, c) {
+                                    console.log('It is error');
+                                    console.log(c);
+                                });
+                                reload.hide();
+                            }).fail(function(a, b, c) {
+                                console.log('It is error');
+                                console.log(c);
+                            })
                         }
                     }).find('.modal-content').css({
                        'margin-top': function (){

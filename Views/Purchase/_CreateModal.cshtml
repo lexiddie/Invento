@@ -151,25 +151,6 @@
             
 
             
-            function check() {
-                const data = database.ref().child('measurements');
-                data.on('value', function(snapshot) {
-                    // for(let i = 0; i < snapshot.children(); i++) {
-                    //     console.log(snapshot[i]['value']);
-                    // } 
-                    let check = false;
-                    snapshot.forEach((child) => {
-                        // console.log(child.key, child.val());
-                        // console.log(child.val()['Name']);
-                        if (child.val()['Name'].toLowerCase() === 'kilogram') {
-                            check = true;
-                        }
-                    });
-                    console.log(check);
-                })
-                
-            }
-            
             
         });
     </script>

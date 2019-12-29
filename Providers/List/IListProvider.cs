@@ -24,5 +24,11 @@ namespace Invento.Providers.List
         List<Inventory> LoadInventories();
 
         Boolean CheckProduct(string name, string code);
+
+        Boolean VoidPurchase(string id);
+        
+        Boolean VoidUsage(string id);
+        
+        Boolean VoidLeftover(string id);
     }
 }

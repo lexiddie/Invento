@@ -39,5 +39,13 @@ namespace Invento.Controllers
         {
             return PartialView("_CreateModal");
         }
+        
+        [HttpPost]
+        [Route("Delete")]
+        public IActionResult Delete(string id)
+        {
+            ListProvider.VoidUsage(id);
+            return Json(new { isSuccess = true} as dynamic);
+        }
     }
 }
