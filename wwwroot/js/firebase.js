@@ -6,7 +6,7 @@ const firebaseConfig = {
   storageBucket: '',
   messagingSenderId: '',
   appId: '',
-  measurementId: 'L'
+  measurementId: ''
 };
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
