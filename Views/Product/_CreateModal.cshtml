@@ -1,0 +1,208 @@
+@{
+    ViewData["Title"] = "Add Product";
+}
+
+<div>
+    <div class="page-info m-t-30">    
+        <div>    
+            <div>
+                <label class="m-l-15">Add Product<span></span></label>
+            </div>
+            <div>
+                <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
+                    <img src="@Url.Content("~/assets/icon/arrow_back.png")" class="w-18px h-18px" alt="Arrow Back Logo"/> 
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+        <div>    
+            <label></label>
+        </div>
+    </div>
+
+    <div class="page-form m-t-30">
+        <div>
+            <div>
+                <label>Category</label>
+                <select id="select-category">
+                    <option selected="selected" disabled="disabled">Select Category</option>
+                </select>
+            </div>
+            <div>
+                <label>Measurement</label>
+                <select id="select-measurement">
+                    <option selected="selected" disabled="disabled">Select Measurement</option>
+                </select>
+            </div>
+            <div>
+                <label>Name</label>
+                <input id="textfield-name" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Code</label>
+                <input id="textfield-code" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Description</label>
+                <input id="textfield-description" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Status</label>
+                <select id="textfield-status">
+                    <option selected="selected" value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+        </div>
+        
+        <div>
+            <div>
+                <button id="handle-save" type="submit">
+                    <span>Save</span>
+                </button>
+                <button id="handle-cancel" type="submit">
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const mainPartial = $('#product-partial');
+            const database = firebase.database();
+            const categorySelect = $('#select-category');
+            const measurementSelect = $('#select-measurement');
+            const textFieldName = $('#textfield-name');
+            const textFieldCode = $('#textfield-code');
+            const textFieldDescription = $('#textfield-description');
+            const textFieldStatus = $('#textfield-status');
+            
+            $.getJSON('@Url.Action("CompletionCategories", "Home")', function(res) {
+                reload.show();
+                categorySelect.empty();
+                categorySelect.append('<option selected=selected disabled=disabled>Select Category</option>');         
+                $.each(res, function(index, data) {
+                    categorySelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
+                });
+                reload.hide();
+            });
+            $.getJSON('@Url.Action("CompletionMeasurements", "Home")', function(res) {
+                reload.show();
+                measurementSelect.empty();
+                measurementSelect.append('<option selected=selected disabled=disabled>Select Measurement</option>');         
+                $.each(res, function(index, data) {
+                    measurementSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
+                });
+                reload.hide();
+            });
+            
+            $('#back-to-index').click(function() {
+                back();
+            });
+            
+            $('#handle-cancel').click(function() {
+                back();
+            });
+            
+            $('#handle-save').click(function() {
+                if (!checkValidSelect()) {
+                    bootbox.alert("Please select Category and Measurement").find('.modal-content').css({
+                       'margin-top': function (){
+                           const w = $( window ).height();
+                           const b = $(".modal-dialog").height();
+                           const h = (w - b) / 2;
+                           return h + "px";
+                       }
+                    });
+                } else if (!checkValidInput()) {
+                    bootbox.alert("Product's Name and Code must be not empty").find('.modal-content').css({
+                       'margin-top': function (){
+                           const w = $( window ).height();
+                           const b = $(".modal-dialog").height();
+                           const h = (w - b) / 2;
+                           return h + "px";
+                       }
+                    });
+                }  else {
+                    save();
+                }
+            });
+            
+            function checkValidSelect() {
+                return categorySelect.val() && measurementSelect.val();
+            }
+            
+            function checkValidInput() {
+                return textFieldName.val() !== '' && textFieldCode.val() !== '';
+            }
+                
+            function back() {
+                reload.show();  
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("List", "Product")`,
+                    cache: true
+                }).done(function(res) { 
+                    mainPartial.empty().append(res);
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                    handleErrorPage();
+                });
+            }
+            
+            function save() {
+                reload.show();
+                $.ajax({
+                    type: 'POST',
+                    url: `@Url.Action("CheckProduct", "Home")?name=${textFieldName.val()}&code=${textFieldCode.val()}`,
+                    cache: true,
+                }).done(function(res) {
+                    console.log(res['isValid']);
+                    if (res['isValid']) {
+                        console.log('Something is exists');
+                        bootbox.alert("Product's Code or Name is already exists, please input another!!").find('.modal-content').css({
+                           'margin-top': function (){
+                               const w = $( window ).height();
+                               const b = $(".modal-dialog").height();
+                               const h = (w - b) / 2;
+                               return h + "px";
+                           }
+                        });
+                        reload.hide();
+                    } else {
+                        $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
+                            const userKey = database.ref().child('products').push().key;
+                            const data = {Id: userKey, CategoryId: categorySelect.val(), MeasurementId: measurementSelect.val(), Name: textFieldName.val().trimEnd(), Code: textFieldCode.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                            database.ref().child('products').child(userKey).set(data);
+                            back();
+                        }).fail(function(a, b, c) {
+                            console.log('It is error');
+                            console.log(c);
+                            handleErrorPage();
+                        });
+                    }
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                    handleErrorPage();
+                })
+            }
+            
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
+            }
+        });
+    </script>
+</div>

@@ -1,0 +1,157 @@
+@{
+    ViewData["Title"] = "Add Measurement";
+}
+
+<div>
+    <div class="page-info m-t-30">    
+        <div>    
+            <div>
+                <label class="m-l-15">Add Purchase<span></span></label>
+            </div>
+            <div>
+                <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
+                    <img src="@Url.Content("~/assets/icon/arrow_back.png")" class="w-18px h-18px" alt="Arrow Back Logo"/> 
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+        <div>    
+            <label></label>
+        </div>
+    </div>
+
+    <div class="page-form m-t-30">
+        <div>
+            <div>
+                <label>Product</label>
+                <select id="select-product">
+                    <option selected="selected" disabled="disabled">Select Product</option>
+                </select>
+            </div>
+            <div id="handle-measurement" style="display: none;">
+                <label>Measurement</label>
+                <input id="textfield-measurement" type="text" readonly="readonly" class="display-textfield"/>
+            </div>
+            <div>
+                <label>Supplier</label>
+                <select id="select-supplier">
+                    <option selected="selected" disabled="disabled">Select Supplier</option>
+                </select>
+            </div>
+            <div>
+                <label>Quantity</label>
+                <input id="textfield-quantity" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Price</label>
+                <input id="textfield-price" type="text" class="main-textfield"/>
+            </div>
+        </div>
+        
+        <div>
+            <div>
+                <button id="handle-save" type="submit">
+                    <span>Save</span>
+                </button>
+                <button id="handle-cancel" type="submit">
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const mainPartial = $('#purchase-partial');
+            const database = firebase.database();
+            const handleMeasurement = $('#handle-measurement');
+            const productSelect = $('#select-product');
+            const supplierSelect = $('#select-supplier');
+            const textFieldMeasurement = $('#textfield-measurement');
+            const textFieldQuantity = $('#textfield-quantity');
+            const textFieldPrice = $('#textfield-price');
+            let products;
+            let purchaseCode;
+            
+            $.getJSON('@Url.Action("GeneratePurchase", "Home")', function(res) {
+                purchaseCode = res['purchaseCode'];
+            });
+            
+            
+            $.when(
+                reload.show(),      
+                $.getJSON('@Url.Action("CompletionProducts", "Home")', function(res) {
+                    products = res;
+                    productSelect.empty();
+                    productSelect.append('<option selected=selected disabled=disabled>Select Product</option>');         
+                    $.each(res, function(index, data) {
+                        productSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
+                    })
+                }),
+                $.getJSON('@Url.Action("CompletionSuppliers", "Home")', function(res) {
+                    supplierSelect.empty();
+                    supplierSelect.append('<option selected=selected disabled=disabled>Select Supplier</option>');         
+                    $.each(res, function(index, data) {
+                        supplierSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
+                    })
+                })
+            ).then(function() {
+                reload.hide();
+            });
+            
+            productSelect.change(function() {
+                const index = $(this).prop('selectedIndex');
+                textFieldMeasurement.val(products[index - 1]['measurement']);
+                handleMeasurement.show();
+            });
+            
+            $('#back-to-index').click(function() {
+                back();
+            });
+            
+            $('#handle-cancel').click(function() {
+                back();
+            });
+            
+            $('#handle-save').click(function() {
+                save();
+            });
+            
+            function back() {
+                reload.show();  
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("List", "Purchase")`,
+                    cache: true
+                }).done(function(res) {
+                    mainPartial.empty().append(res);
+                    reload.hide();      
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+            }
+            
+            function save() {
+                $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
+                    console.log('Is working');
+                    const userKey = database.ref().child('purchases').push().key;
+                    const data = {Id: userKey, Code: purchaseCode, ProductId: productSelect.val(), SupplierId: supplierSelect.val(), Quantity: textFieldQuantity.val().trimEnd(), Price: textFieldPrice.val().trimEnd(), IsVoid: false, CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                    console.log(data);
+                    database.ref().child('purchases').child(userKey).set(data);
+                    back();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                    console.log('Something is wrong');
+                });
+            }
+            
+
+            
+            
+        });
+    </script>
+</div>

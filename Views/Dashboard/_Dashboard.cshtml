@@ -1,0 +1,184 @@
+@model Invento.ViewModels.DashboardViewModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div>
+    <div class="page-selection m-t-30">
+        <div>    
+            <img class="m-x-15" src="@Url.Content("~/assets/icon/clock.png")" alt="Clock Logo"/>
+            <label class="m-l-10 m-t-5">Updated At @Model.UpdatedDateTime</label>
+        </div>    
+        <div>
+            <label></label>
+        </div>
+    </div>
+    
+    <div class="page-visualization-4 m-t-30">
+        <div>
+            <div>
+                <img src="@Url.Content("~/assets/icon/speedometer.png")" alt="Measurement Logo"/>
+                <label>Measurement</label>
+            </div>
+            <div>
+                <label>@Model.Measurement</label>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img src="@Url.Content("~/assets/icon/supplier.png")" alt="Supplier Logo"/>
+                <label>Supplier</label>
+            </div>
+            <div>
+                <label>@Model.Supplier</label>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img src="@Url.Content("~/assets/icon/category.png")" alt="Category Logo"/>
+                <label>Category</label>
+            </div>
+            <div>
+                <label>@Model.Category</label>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img src="@Url.Content("~/assets/icon/product.png")" alt="Product Logo"/>
+                <label>Product</label>
+            </div>
+            <div>
+                <label>@Model.Product</label>
+            </div>
+        </div>
+    </div>
+    
+    <div class="page-visualization-3 m-t-30">
+        <div>
+            <div>
+                <img src="@Url.Content("~/assets/icon/purchase.png")" alt="Purchase Logo"/>
+                <label>Purchase</label>
+            </div>
+            <div>
+                <label>@Model.Purchase</label>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img src="@Url.Content("~/assets/icon/usage.png")" alt="Supplier Logo"/>
+                <label>Usage</label>
+            </div>
+            <div>
+                <label>@Model.Usage</label>
+            </div>
+        </div>
+        <div>
+            <div>
+                <img src="@Url.Content("~/assets/icon/leftover.png")" alt="Category Logo"/>
+                <label>Leftover</label>
+            </div>
+            <div>
+                <label>@Model.Leftover</label>
+            </div>
+        </div>
+    </div> 
+    
+    <div class="page-selection m-t-30">
+        <div>    
+            <img class="m-x-15" src="@Url.Content("~/assets/icon/visual.png")" alt="visualization Logo"/>
+            <label class="m-l-10 m-t-5">Visualization</label>`
+        </div>    
+        <div>    
+            <label class="m-x-10">Start Date</label>
+            <label for="first-calendar"></label>
+            <input id="first-calendar" type="text" value="@Model.UpdatedDateTime.Split(" ")[0]" readonly="readonly" class="main-textfield"/>
+            @* <select id="semester" class="main-select"> *@
+            @*     <option selected="selected" disabled="disabled">Select Semester</option> *@
+            @* </select> *@
+            <label class="m-l-35 m-r-10">To Date</label>
+            <label for="second-calendar"></label>
+            <input id="second-calendar" type="text" value="@Model.UpdatedDateTime.Split(" ")[0]" readonly="readonly" class="main-textfield"/>
+            @* <select id="session" class="main-select"> *@
+            @*     <option selected="selected" disabled="disabled">Select Session</option> *@
+            @* </select> *@
+            <button id="search-inventories" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
+                <img src="@Url.Content("~/assets/icon/search.png")" alt="Search Logo"/> 
+                <span>Search</span>
+            </button>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const firstCalendar = $('#first-calendar');
+            const secondCalendar = $('#second-calendar');
+            const handleSearch = $('#search-inventories');
+            const secondPartial = $('#inventory-partial');
+            firstCalendar.datepicker({ dateFormat: 'dd/mm/yy' });
+            secondCalendar.datepicker({ dateFormat: 'dd/mm/yy' });
+            
+            firstCalendar.click(function() {
+                console.log('This is my bitch');
+                firstCalendar.datepicker();
+            });
+            
+            secondCalendar.click(function() {
+                console.log('This is my bitch');
+                secondCalendar.datepicker();
+            });
+            
+            handleSearch.click(function() {
+                console.log(firstCalendar.val());
+                console.log(secondCalendar.val());
+                $.ajax({
+                    type: 'POST',
+                    url: `@Url.Action("CheckValidDate", "Home")?startDate=${firstCalendar.val()}&toDate=${secondCalendar.val()}`,
+                    cache: true,
+                }).done(function(res) {
+                    if (res['isValid']) {
+                        reload.show();
+                        $.ajax({
+                            type: 'POST',
+                            url: `@Url.Action("Inventories", "Dashboard")?startDate=${firstCalendar.val()}&toDate=${secondCalendar.val()}`,
+                            cache: true,
+                        }).done(function(res) {
+                            secondPartial.empty().append(res);
+                            reload.hide();
+                        }).fail(function(a, b, c) {
+                            console.log('It is error');
+                            console.log(c);
+                            handleErrorPage();
+                        })
+                    } else {
+                       bootbox.alert("Invalid selected date! Start Date must be before the To Date").find('.modal-content').css({
+                          'margin-top': function (){
+                              const w = $( window ).height();
+                              const b = $(".modal-dialog").height();
+                              const h = (w - b) / 2;
+                              return h + "px";
+                          }
+                       }); 
+                    }
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                    handleErrorPage();
+                });
+            });
+            
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
+            }
+        });
+    </script>
+</div>
+
+ 

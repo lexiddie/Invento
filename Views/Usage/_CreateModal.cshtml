@@ -1,0 +1,164 @@
+@{
+    ViewData["Title"] = "Add Measurement";
+}
+
+<div>
+    <div class="page-info m-t-30">    
+        <div>    
+            <div>
+                <label class="m-l-15">Add Usage<span></span></label>
+            </div>
+            <div>
+                <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
+                    <img src="@Url.Content("~/assets/icon/arrow_back.png")" class="w-18px h-18px" alt="Arrow Back Logo"/> 
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+        <div>    
+            <label></label>
+        </div>
+    </div>
+
+    <div class="page-form m-t-30">
+        <div>
+            <div>
+                <label>Product</label>
+                <select id="select-product">
+                    <option selected="selected" disabled="disabled">Select Product</option>
+                </select>
+            </div>
+            <div id="handle-available" style="display: none;">
+                <label>Available</label>
+                <input id="textfield-available" type="text" readonly="readonly" class="display-textfield"/>
+            </div>
+            <div>
+                <label>Quantity</label>
+                <input id="textfield-quantity" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Description</label>
+                <input id="textfield-description" type="text" class="main-textfield"/>
+            </div>
+        </div>
+        
+        <div>
+            <div>
+                <button id="handle-save" type="submit">
+                    <span>Save</span>
+                </button>
+                <button id="handle-cancel" type="submit">
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const mainPartial = $('#usage-partial');
+            const database = firebase.database();
+            const handleAvailable = $('#handle-available');
+            const productSelect = $('#select-product');
+            const textFieldAvailable = $('#textfield-available');
+            const textFieldQuantity = $('#textfield-quantity');
+            const textFieldDescription = $('#textfield-description');
+            let products;
+            let usageCode;
+            
+            $.getJSON('@Url.Action("GenerateUsage", "Home")', function(res) {
+                usageCode = res['usageCode'];
+            });
+            
+            $.when(
+                reload.show(),
+                $.getJSON('@Url.Action("CompletionProducts", "Home")', function(res) {
+                    products = res;
+                    productSelect.empty();
+                    productSelect.append('<option selected=selected disabled=disabled>Select Product</option>');         
+                    $.each(res, function(index, data) {
+                        productSelect.append('<option value="' + data['id'] + '">' + data['name'] + '</option>');
+                    })
+                })
+            ).then(function() {
+                reload.hide();
+            });
+            
+            productSelect.change(function() {
+                const index = $(this).prop('selectedIndex');
+                reload.show();
+                $.ajax({
+                    type: 'POST',
+                    url: `@Url.Action("LoadAvailable", "Home")?productId=${productSelect.val()}`,
+                    cache: true,
+                    dataType: 'json'
+                }).done(function(res) {
+                    textFieldAvailable.val(`${res['available']} ${products[index - 1]['measurement']}`);
+                    handleAvailable.show();
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+
+            });
+            
+            $('#back-to-index').click(function() {
+                back();
+            });
+            
+            $('#handle-cancel').click(function() {
+                back();
+            });
+            
+            $('#handle-save').click(function() {
+                save();
+            });
+            
+            function back() {
+                reload.show();  
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("List", "Usage")`,
+                    cache: true
+                }).done(function(res) {
+                    mainPartial.empty().append(res);
+                    reload.hide();      
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+            }
+            
+            function save() {
+                if  ((textFieldAvailable.val().split(" ")[0]) >= textFieldQuantity.val() && textFieldQuantity.val() > 0) {
+                    $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
+                        const userKey = database.ref().child('usages').push().key;
+                        const data = {Id: userKey, Code: usageCode, ProductId: productSelect.val(), Quantity: textFieldQuantity.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsVoid: false, CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                        console.log(data);
+                        database.ref().child('usages').child(userKey).set(data);
+                        back();
+                    }).fail(function(a, b, c) {
+                        console.log('It is error');
+                        console.log(c);
+                    });
+                } else {
+                   bootbox.alert("Invalid Quantity input! please input again").find('.modal-content').css({
+                      'margin-top': function (){
+                          const w = $( window ).height();
+                          const b = $(".modal-dialog").height();
+                          const h = (w - b) / 2;
+                          return h + "px";
+                      }
+                   }); 
+                }
+            }
+            
+
+            
+            
+        });
+    </script>
+</div>

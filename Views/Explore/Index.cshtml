@@ -1,0 +1,77 @@
+    @{
+    ViewData["Title"] = "Purchase";
+}
+
+<div class="page-content">
+    <div>   
+        <div class="page-header">
+            <label>Explore</label>
+        </div>
+
+        <div class="page-selection m-t-20">
+            <div>    
+                <img class="m-x-15" src="@Url.Content("~/assets/icon/visualization.png")" alt="Visualization Logo"/>
+                <label class="m-l-10 m-t-5">Explore</label>
+            </div>    
+            <div>
+                <button id="refresh-page" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
+                    <img src="@Url.Content("~/assets/icon/refresh.png")" alt="Refresh Logo"/> 
+                    <span>Refresh</span>
+                </button>
+            </div>
+        </div>
+        <div id="explore-partial"></div>
+    </div>
+    <script>
+        $(document).ready(function() { 
+            const reload = $('div[id$=main-reloading]');
+            const handleRefresh = $('#refresh-page');
+            const mainPartial = $('#explore-partial');
+           
+            handleRefresh.click(function() {
+                reload.show();
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("List", "Explore")`,
+                    cache: true
+                }).done(function(res) {
+                    mainPartial.empty().append(res);
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log(c);
+                });
+            });   
+            
+            reload.show();
+            $.ajax({
+                type: 'GET',
+                url: `@Url.Action("List", "Explore")`,
+                cache: true
+            }).done(function(res) {
+                mainPartial.empty().append(res);
+                reload.hide();
+            }).fail(function(a, b, c) {
+                console.log('It is error');
+                console.log(c);
+                handleErrorPage();
+            });
+            
+            function handleErrorPage() {
+                const url = '@Url.Action("ErrorPage", "Home")';
+                $.ajax({
+                    type: 'GET',
+                    url: url,
+                    cache: true
+                }).done(function(res) {
+                    $('#main-page').empty().append(res);
+                    reload.hide();
+                })
+            }
+        });
+    </script>
+</div>
+
+
+
+
+

@@ -1,0 +1,154 @@
+@{
+    ViewData["Title"] = "Add Measurement";
+}
+
+<div>
+    <div class="page-info m-t-30">    
+        <div>    
+            <div>
+                <label class="m-l-15">Add Supplier<span></span></label>
+            </div>
+            <div>
+                <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
+                    <img src="@Url.Content("~/assets/icon/arrow_back.png")" class="w-18px h-18px" alt="Arrow Back Logo"/> 
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+        <div>    
+            <label></label>
+        </div>
+    </div>
+
+
+    <div class="page-form m-t-30">
+        <div>
+            <div>
+                <label>Name</label>
+                <input id="textfield-name" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Email</label>
+                <input id="textfield-email" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Phone Number</label>
+                <input id="textfield-phone-number" type="text" class="main-textfield"/>
+            </div>    
+            <div>
+                <label>Country</label>
+                <select id="select-country">
+                    <option selected="selected" disabled="disabled">Select Country</option>
+                </select>
+            </div>
+            <div>    
+                <label>Address</label>
+                <input id="textfield-address" type="text" class="main-textfield"/>
+            </div>
+            <div>    
+                <label>Description</label>
+                <input id="textfield-description" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Status</label>
+                <select id="select-status">
+                    <option selected="selected" value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+        </div>
+        
+        <div>
+            <div>
+                <button id="handle-save" type="submit">
+                    <span>Save</span>
+                </button>
+                <button id="handle-cancel" type="submit">
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const mainPartial = $('#supplier-partial');
+            const database = firebase.database();
+            const countrySelect = $('#select-country');
+            const statusSelect = $('#select-status');
+            const textFieldName = $('#textfield-name');
+            const textFieldEmail = $('#textfield-email');
+            const textFieldPhoneNumber = $('#textfield-phone-number');
+            const textFieldAddress = $('#textfield-address');
+            const textFieldDescription = $('#textfield-description');
+            
+            check();
+            
+            $('#back-to-index').click(function() {
+                back();
+            });
+            
+            $('#handle-cancel').click(function() {
+                back();
+            });
+            
+            $('#handle-save').click(function() {
+                save();
+            });
+            
+            
+            $.getJSON('@Url.Action("CompletionCountries", "Home")', function(res) {
+                reload.show();
+                countrySelect.empty();
+                countrySelect.append('<option selected=selected disabled=disabled>Select Country</option>');         
+                $.each(res, function(index, data) {
+                    console.log(data);
+                    countrySelect.append('<option value="' + data['name'] + '">' + data['name'] + '</option>');
+                });
+                reload.hide();
+            });
+            
+                function back() {
+                reload.show();  
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("List", "Supplier")`,
+                    cache: true
+                }).done(function(res) {
+                    mainPartial.empty().append(res);
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+            }
+            
+            function save() {
+                $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
+                    const userKey = database.ref().child('suppliers').push().key;
+                    const data = {Id: userKey, Name: textFieldName.val().trimEnd(), Email: textFieldEmail.val().trimEnd(), TelephoneNumber: textFieldPhoneNumber.val().trimEnd(), Country: countrySelect.val(), Address: textFieldAddress.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: statusSelect.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                    database.ref().child('suppliers').child(userKey).set(data);
+                    back();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+            }
+            
+            function check() {
+                // console.log(database.ref().child('measurements').push().key);
+                const data = database.ref().child('measurements');
+                data.on('value', function(snapshot) {
+                    for(let i = 0; i < snapshot.children(); i++) {
+                        console.log(snapshot[i]);
+                    } 
+                })
+                
+            }
+            
+            
+        });
+    </script>
+</div>

@@ -1,0 +1,127 @@
+@{
+    ViewData["Title"] = "Add Measurement";
+}
+
+<div>
+    <div class="page-info m-t-30">    
+        <div>    
+            <div>
+                <label class="m-l-15">Add Measurement<span></span></label>
+            </div>
+            <div>
+                <button id="back-to-index" class="main-btn main-btn-primary h-30px w-150px m-l-15 m-r-20" type="submit">
+                    <img src="@Url.Content("~/assets/icon/arrow_back.png")" class="w-18px h-18px" alt="Arrow Back Logo"/> 
+                    <span>Back</span>
+                </button>
+            </div>
+        </div>
+        <div>    
+            <label></label>
+        </div>
+    </div>
+
+
+    <div class="page-form m-t-30">
+        <div>
+            <div>
+                <label>Name</label>
+                <input id="textfield-name" type="text" class="main-textfield"/>
+            </div>
+            <div>    
+                <label>Description</label>
+                <input id="textfield-description" type="text" class="main-textfield"/>
+            </div>
+            <div>
+                <label>Status</label>
+                <select id="textfield-status">
+                    <option selected="selected" value="true">Active</option>
+                    <option value="false">Inactive</option>
+                </select>
+            </div>
+        </div>
+        
+        <div>
+            <div>
+                <button id="handle-save" type="submit">
+                    <span>Save</span>
+                </button>
+                <button id="handle-cancel" type="submit">
+                    <span>Cancel</span>
+                </button>
+            </div>
+        </div>
+
+    </div>
+    
+    <script>
+        $(document).ready(function() {
+            const reload = $('div[id$=main-reloading]');
+            const mainPartial = $('#measurement-partial');
+            const database = firebase.database();
+            const textFieldName = $('#textfield-name');
+            const textFieldDescription = $('#textfield-description');
+            const textFieldStatus = $('#textfield-status');
+            
+            check();
+            $('#back-to-index').click(function() {
+                back();
+            });
+            
+            $('#handle-cancel').click(function() {
+                back();
+            });
+            
+            $('#handle-save').click(function() {
+                save();
+            });
+            
+            function back() {
+                reload.show();  
+                $.ajax({
+                    type: 'GET',
+                    url: `@Url.Action("List", "Measurement")`,
+                    cache: true
+                }).done(function(res) {
+                        mainPartial.empty().append(res);
+                    reload.hide();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+            }
+            
+            function save() {
+                $.get(`@Url.Action("CurrentDateTime", "Home")`).done(function(res) {
+                    const userKey = database.ref().child('measurements').push().key;
+                    const data = {Id: userKey, Name: textFieldName.val().trimEnd(), Description: textFieldDescription.val().trimEnd(), IsActive: textFieldStatus.val() === 'true', CreatedAt: res['dateTime'], CreatedBy: 'Admin'};
+                    database.ref().child('measurements').child(userKey).set(data);
+                    back();
+                }).fail(function(a, b, c) {
+                    console.log('It is error');
+                    console.log(c);
+                });
+            }
+            
+            function check() {
+                const data = database.ref().child('measurements');
+                data.on('value', function(snapshot) {
+                    // for(let i = 0; i < snapshot.children(); i++) {
+                    //     console.log(snapshot[i]['value']);
+                    // } 
+                    let check = false;
+                    snapshot.forEach((child) => {
+                        // console.log(child.key, child.val());
+                        // console.log(child.val()['Name']);
+                        if (child.val()['Name'].toLowerCase() === 'kilogram') {
+                            check = true;
+                        }
+                    });
+                    console.log(check);
+                })
+                
+            }
+            
+            
+        });
+    </script>
+</div>

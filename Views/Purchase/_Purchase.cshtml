@@ -1,0 +1,166 @@
+@model Invento.ViewModels.PurchaseViewModel
+@using Newtonsoft.Json
+@{
+    Layout = null;
+    var i = 0;
+}
+
+<div>
+    <div class="page-selection m-t-30">
+        <div>    
+            <img class="m-x-15" src="@Url.Content("~/assets/icon/clock.png")" alt="Clock Logo"/>
+            <label class="m-l-10 m-t-5">Updated At @Model.UpdatedDateTime</label>
+        </div>    
+        <div>
+            <button id="create-purchase" class="main-btn main-btn-primary h-30px w-150px m-l-35 m-r-15" type="submit">
+                <img src="@Url.Content("~/assets/icon/add.png")" alt="Add Logo"/> 
+                <span>Add</span>
+            </button>
+        </div>
+    </div>
+    <section class="page-table m-t-30">
+        <div class="col-md-12 col-lg-12">
+            <div class="block block--underline">
+                <div class="block__body text-left height-3">
+                    <div class="table-responsive">
+                        <table id="table-auto" class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th class="mn-w-40px w-40px"><img class="w-15px h-15px" src="~/assets/icon/sort.png" alt="Sort Logo"/></th>
+                                <th class="mn-w-150px w-150px">Code</th>
+                                <th class="mn-w-200px w-200px">Product</th>
+                                <th class="mn-w-200px w-200px">Supplier</th>
+                                <th class="mn-w-200px w-200px">Unit of Measurement</th>
+                                <th class="mn-w-150px w-150px">Quantity</th>
+                                <th class="mn-w-150px w-150px">Price</th>
+                                <th class="mn-w-80px w-80px no-sort">Action</th>
+                                <th class="mn-w-80px w-80px no-sort">Status</th>     
+                                <th class="mn-w-100px w-100px">Created On</th>
+                                <th class="mn-w-90px w-90px">Created By</th>
+                            </tr>
+                            </thead>
+                            <tbody>        
+                            @foreach (var item in JsonConvert.DeserializeObject<List<Purchase>>(Model.Purchases))
+                            {
+                                i++;
+                                <tr>
+                                    <td>@i.ToString()</td>
+                                    <td>@item.Code</td>
+                                    <td>@item.Product</td>
+                                    <td>@item.Supplier</td>
+                                    <td>@item.Measurement</td>
+                                    <td>@item.Quantity</td>
+                                    <td>@item.Price</td>
+                                    <td class="display-flex">
+                                        <a asp-controller="Purchase" asp-action="Delete" asp-route-Id="@item.Id"  class="btn-image btn-image-danger w-23px h-23px"><img class="w-15px h-15px" src="@Url.Content("~/assets/icon/trash.png")" alt="Delete Logo"/></a>
+                                    </td>
+                                    <td>
+                                        @{
+                                            var status = "Void";
+                                            var statusClass = "bg-void";
+                                            if (!item.IsVoid) 
+                                            {
+                                                status = "Paid";
+                                                statusClass = "bg-info";
+                                            }
+                                            <span class="label-status  @statusClass">@status</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @{
+                                            var dateTime = $"{item.CreatedDate} {item.CreatedTime}";
+                                            <span>@dateTime</span>
+                                        }
+                                    </td>
+                                    <td>@item.CreatedBy</td>
+                                </tr>
+                            }
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <script>
+            $(document).ready(function() {
+                const handleTable = $('#table-auto');
+                const handleCreatePurchase= $('#create-purchase');
+                const reload = $('div[id$=main-reloading]');
+                const mainPartial = $('#purchase-partial');
+                
+    
+                handleCreatePurchase.click(function() {
+                    reload.show();
+                    $.ajax({
+                        type: 'GET',
+                        url: `@Url.Action("Create", "Purchase")`,
+                        cache: true
+                    }).done(function(res) {
+                        mainPartial.empty().append(res);
+                        reload.hide();
+                    }).fail(function(a, b, c) {
+                        console.log(c);
+                    });
+                });  
+                
+                
+                
+                handleTable.DataTable({
+                "columnDefs": [{
+                    "targets": "no-sort",
+                    "orderable": false
+                    }]
+                });
+                
+                handleTable.on('click', '.btn-image-danger', function(event) {
+                    event.preventDefault();
+                    const url = $(this).attr("href");
+                    console.log(url);
+                    handleDelete(url);
+                });
+                
+                function handleDelete(url) {
+                    bootbox.confirm('Are you sure you want to void this purchase?', function(res){
+                        if (res) {
+                            reload.show();
+                            $.ajax({
+                                type: 'POST',
+                                url: url,
+                                cache: true,
+                            }).done(function(res) {
+                                reload.show();
+                                $.ajax({
+                                    type: 'GET',
+                                    url: `@Url.Action("List", "Purchase")`,
+                                    cache: true
+                                }).done(function(res) {
+                                    mainPartial.empty().append(res);
+                                    reload.hide();
+                                }).fail(function(a, b, c) {
+                                    console.log('It is error');
+                                    console.log(c);
+                                });
+                                reload.hide();
+                            }).fail(function(a, b, c) {
+                                console.log('It is error');
+                                console.log(c);
+                            })
+                        }
+                    }).find('.modal-content').css({
+                       'margin-top': function (){
+                           const w = $( window ).height();
+                           const b = $(".modal-dialog").height();
+                           const h = (w - b) / 2;
+                           return h + "px";
+                       }
+                    });
+                }
+                
+            }); 
+        </script>
+    </section>
+</div>
+
+
+
+   
